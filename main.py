@@ -18,6 +18,8 @@ for event in longpoll.listen():
     if event.type == VkBotEventType.MESSAGE_NEW:
         if (event.obj.text == '!пик' or event.obj.text == '!пикча'):
             picture.pic(event.obj.peer_id, vk)
+        if (event.obj.text == '!гат' or event.obj.text == '!гатари'):
+            picture.gat(event.obj.peer_id, vk)
+
         if (event.obj.text=="!мать"):
-            pass
-        vk.messages.send(peer_id=event.obj.peer_id, random_id=0, message="мать жива")
+            vk.messages.send(peer_id=event.obj.peer_id, random_id=0, message="мать жива")
