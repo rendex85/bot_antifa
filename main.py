@@ -4,6 +4,7 @@ from vk_api.bot_longpoll import VkBotLongPoll, VkBotEventType
 
 from MembersConf import *
 import login_consts
+from TextAnswer import  *
 
 from GetPicture import *
 
@@ -22,7 +23,10 @@ for event in longpoll.listen():
             picture.pic(event.obj.peer_id, vk)
         if (event.obj.text == '!гат' or event.obj.text == '!гатари'):
             picture.gat(event.obj.peer_id, vk)
+        if (event.obj.text.lower().find('!кто') != (-1)):
+            TextAnswer(event.obj.peer_id, vk).answerwho(event.obj.text)
 
         if (event.obj.text=="!мать"):
             vk.messages.send(peer_id=event.obj.peer_id, random_id=0, message="мать жива")
-            print(MembersConf(vk,event.obj.peer_id).getonemember())
+        if (event.obj.text == "*public178122731 top anime"):
+            vk.messages.send(peer_id=event.obj.peer_id, random_id=0, message="завали сой гнилой еблет")
