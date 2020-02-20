@@ -8,15 +8,19 @@ class GetPicture:
     login, password = login_consts.phone, login_consts.password
     vk_session1 = vk_api.VkApi(login, password)
 
-    def post(self, obj, vk, url_pic):
-        vk.messages.send(peer_id=obj, random_id=0, attachment=url_pic)
+    def __init__(self, peer_id, vk):
+        self.peer_id=peer_id
+        self.vk=vk
 
-    def pic(self, obj, vk):
-        self.post(obj, vk, self.get_img('-84187544','wall','photo-84187544'))
+    def post(self, url_pic):
+        self.vk.messages.send(peer_id=self.peer_id, random_id=0, attachment=url_pic)
 
-    def gat(self, obj, vk):
+    def pic(self):
+        self.post(self.get_img('-84187544','wall','photo-84187544'))
+
+    def gat(self):
         choosen_alb=random.choice(const_array.gatari_alb_lsit)
-        self.post(obj,vk,self.get_img('-7776162',choosen_alb,'photo-7776162'))
+        self.post(self.get_img('-7776162',choosen_alb,'photo-7776162'))
 
 
     def get_img(self,owner,album,photo_obj_start):
