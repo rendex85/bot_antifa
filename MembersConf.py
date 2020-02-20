@@ -1,10 +1,15 @@
+import random
+
+
 class MembersConf():
     memb_dict = dict()
-    list_of_members=list()
-    admin_list=list()
+    list_of_members = list()
+    admin_list = list()
 
-    def __init__(self, vk, peer_id):
-        self.memb_dict = dict(vk.messages.getConversationMembers(peer_id=str(peer_id)))
+    def __init__(self, peer_id, vk):
+        self.vk=vk
+        self.peer_id=peer_id
+        self.memb_dict = dict(vk.messages.getConversationMembers(peer_id=str(self.peer_id)))
 
         for i in self.memb_dict['profiles']:
             self.list_of_members.append(
@@ -14,9 +19,11 @@ class MembersConf():
             self.list_of_members.append(
                 {'full_name': i['name'], 'id': i['id'], 'photo_miniature': i['photo_50'], 'type': 'group',
                  'admin': 'false'})
+        for i in self.memb_dict['items']:
+            if ('is_admin' in i) and (i['is_admin'] == True):
+                self.admin_list.append({'id': i['member_id']})
 
     def getonemember(self):
-        listofmembers = list()
+        return (random.choice(self.list_of_members))
 
 
-        return (listofmembers)
