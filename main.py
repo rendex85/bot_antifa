@@ -1,6 +1,8 @@
 import requests
 from vk_api import *
 from vk_api.bot_longpoll import VkBotLongPoll, VkBotEventType
+
+from MembersConf import *
 import login_consts
 
 from GetPicture import *
@@ -23,3 +25,4 @@ for event in longpoll.listen():
 
         if (event.obj.text=="!мать"):
             vk.messages.send(peer_id=event.obj.peer_id, random_id=0, message="мать жива")
+            print(MembersConf(vk,event.obj.peer_id).getonemember())
