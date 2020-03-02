@@ -1,4 +1,4 @@
-from MembersConf import *
+from WorkWithUsers import *
 import const_array
 
 
@@ -10,7 +10,6 @@ class TextAnswer(MembersConf):
         msg_text = msg_text[(msg_text).lower().find('!кто') + 4:]
         full_msg=random.choice(const_array.answ) + ' ' + self.getonemember()['full_name'] + ' ' + msg_text
         self.sendmsg(self.vk,self.peer_id,full_msg)
-
 
     def sendmsg(self,vk,peer_id,msg):
         vk.messages.send(peer_id=peer_id, random_id=0, message=msg)
