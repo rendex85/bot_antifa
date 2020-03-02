@@ -27,3 +27,12 @@ class MembersConf():
         return (random.choice(self.list_of_members))
 
 
+class UserAnalyze():
+    def __init__ (self, from_id, vk):
+        self.vk=vk
+        self.from_id=from_id
+
+    def getuser(self,params):
+        return (self.vk.users.get(user_ids=self.from_id, fields=params))
+
+
