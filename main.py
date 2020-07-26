@@ -18,18 +18,18 @@ def main():
         if event.type == VkBotEventType.MESSAGE_NEW:
             peer = event.obj.peer_id
             from_id = event.obj.from_id
-            answer_txt = TextAnswer(peer, vk)
-            picture = GetPicture(peer, vk)
-            answer_photo = PhotoAnswer(peer, from_id, vk, vk_session)
-            user = UserAnalyze(from_id, vk)
             txt_find = WorkWithText(peer, from_id, event.obj.text, vk)
             if (event.obj.text == '!пик' or event.obj.text == '!пикча'):
+                picture = GetPicture(peer, vk)
                 picture.pic()
             if (event.obj.text == '!гат' or event.obj.text == '!гатари'):
+                picture = GetPicture(peer, vk)
                 picture.gat()
             if (event.obj.text.lower().find('!кто') != (-1)):
+                answer_txt = TextAnswer(peer, vk)
                 answer_txt.answerwho(event.obj.text)
             if (event.obj.text == "чуш"):
+                answer_photo = PhotoAnswer(peer, from_id, vk, vk_session)
                 answer_photo.chush()
 
             if (event.obj.text.lower().find('гитлер') != (-1)) or (event.obj.text.lower().find('нациз') != (-1)) or (
@@ -41,6 +41,7 @@ def main():
                     vk.messages.send(peer_id=event.obj.peer_id, random_id=0,
                                      attachment=random.choice(const_array.gacha_list))
             if random.randint(1, 200) == 100:
+                answer_photo = PhotoAnswer(peer, from_id, vk, vk_session)
                 answer_photo.chush()
             if random.randint(1, 1000) == 228:
                 vk.messages.send(peer_id=event.obj.peer_id, random_id=0, attachment='doc204181697_493314661')

@@ -2,13 +2,17 @@ import const_array
 from WorkWithUsers import *
 
 
-class TextAnswer(MembersConf):
+class TextAnswer():
+    def __init__(self, peer_id, vk):
+        self.vk=vk
+        self.peer_id=peer_id
+        self.getmember=MembersConf(self.peer_id, self.vk)
     def answerwho(self, msg_text):
         while msg_text.find('&quot;') > 0:
             i = msg_text.find('&quot;')
             msg_text = msg_text[:i] + '"' + msg_text[i + len('&quot;'):]
         msg_text = msg_text[(msg_text).lower().find('!кто') + 4:]
-        full_msg = random.choice(const_array.answ) + ' ' + self.getonemember()['full_name'] + ' ' + msg_text
+        full_msg = random.choice(const_array.answ) + ' ' + self.getmember.getonemember()['full_name'] + ' ' + msg_text
         self.sendmsg(full_msg)
 
     def sendmsg(self, msg):
