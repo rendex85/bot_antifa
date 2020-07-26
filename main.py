@@ -84,5 +84,9 @@ def main():
             rem.start()
 
 if __name__ == '__main__':
-    main()
-
+    d=0
+    while d==0:
+        try:
+            main()
+        except:
+            d=0
