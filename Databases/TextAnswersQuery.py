@@ -29,12 +29,10 @@ class WorkWithText:
     def addToBase(self):
         if (self.message.lower().find("!добавить") != -1 and (self.from_id == 232282950 or self.from_id == 204181697)):
             trigger_txt = self.message[self.message.find("!добавить") + len("!добавить") + 1:self.message.find("|")]
-            print(trigger_txt)
             newTrigger = Trigger(trigger_text=trigger_txt)
             newTrigger.save()
             triggerId = newTrigger.trigger_id
             answer_txt = self.message[self.message.find("|") + 1:]
-            print(answer_txt)
             newAnswer = Answer(answer_text=answer_txt)
             newAnswer.save()
             answerId = newAnswer.answer_id
@@ -42,7 +40,6 @@ class WorkWithText:
             self.text.sendmsg("Новое условие успешно добавлено")
     def removeFromBase(self):
         if (self.message.lower().find("!убрать") != -1 and (self.from_id == 232282950 or self.from_id== 204181697)):
-            print(self.message)
             delete_txt = self.message[self.message.find("!убрать") + len("!убрать") + 1:]
             trigger=Trigger.get(Trigger.trigger_text==delete_txt)
             triggerName=trigger.trigger_text
