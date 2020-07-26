@@ -29,6 +29,7 @@ class WorkWithText:
     def addToBase(self):
         if (self.message.lower().find("!добавить") != -1 and (self.from_id == 232282950 or self.from_id == 204181697)):
             trigger_txt = self.message[self.message.find("!добавить") + len("!добавить") + 1:self.message.find("|")]
+            
             newTrigger = Trigger(trigger_text=trigger_txt)
             newTrigger.save()
             triggerId = newTrigger.trigger_id
