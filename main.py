@@ -1,3 +1,5 @@
+import threading
+
 from vk_api.bot_longpoll import VkBotLongPoll, VkBotEventType
 
 from Databases.TextAnswersQuery import *
@@ -73,14 +75,13 @@ def main():
                 vk.messages.send(peer_id=event.obj.peer_id, random_id=0, message="завали свой гнилой еблет")
             if (event.obj.text == "!мать"):
                 vk.messages.send(peer_id=event.obj.peer_id, random_id=0, message="мать жива")
-            txt_find.answer()
-            txt_find.addToBase()
-            txt_find.removeFromBase()
+            answ=threading.Thread(target=txt_find.answer())
+            answ.start()
+            add = threading.Thread(target=txt_find.addToBase())
+            add.start()
+            rem = threading.Thread(target=txt_find.removeFromBase())
+            rem.start()
 
 if __name__ == '__main__':
-    d=0
-    while d==0:
-        try:
-            main()
-        except:
-            d=0
+    main()
+
