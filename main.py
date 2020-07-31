@@ -13,6 +13,7 @@ vk_session = vk_api.VkApi(token=login_consts.token)
 longpoll = VkBotLongPoll(vk_session, login_consts.public)
 vk = vk_session.get_api()
 
+
 def main():
     for event in longpoll.listen():
         if event.type == VkBotEventType.MESSAGE_NEW:
@@ -31,11 +32,18 @@ def main():
             if (event.obj.text == "чуш"):
                 answer_photo = PhotoAnswer(peer, from_id, vk, vk_session)
                 answer_photo.chush()
+            if event.obj.text.lower().find('!инфа') != (-1):
+                strt = event.obj.text
+                randosha = str(random.randint(1, 100))
+                vk.messages.send(peer_id=event.obj.peer_id, random_id=0,
+                                 message=(random.choice(const_array.answ) + strt[(strt).lower().find(
+                                     '!инфа') + 5:] + " с вероятностью " + randosha + "%"))
 
             if (event.obj.text.lower().find('гитлер') != (-1)) or (event.obj.text.lower().find('нациз') != (-1)) or (
                     event.obj.text.lower().find('нацис') != (-1)) or (event.obj.text.lower().find('гитлир') != (-1)):
                 if random.randint(1, 3) == 3:
-                    vk.messages.send(peer_id=event.obj.peer_id, random_id=0, attachment=random.choice(const_array.naz_list))
+                    vk.messages.send(peer_id=event.obj.peer_id, random_id=0,
+                                     attachment=random.choice(const_array.naz_list))
             if (event.obj.text.lower().find('гача') != (-1)) or (event.obj.text.lower().find('фго') != (-1)):
                 if random.randint(1, 3) == 3:
                     vk.messages.send(peer_id=event.obj.peer_id, random_id=0,
@@ -76,17 +84,18 @@ def main():
                 vk.messages.send(peer_id=event.obj.peer_id, random_id=0, message="завали свой гнилой еблет")
             if (event.obj.text == "!мать"):
                 vk.messages.send(peer_id=event.obj.peer_id, random_id=0, message="мать жива")
-            answ=threading.Thread(target=txt_find.answer())
+            answ = threading.Thread(target=txt_find.answer())
             answ.start()
             add = threading.Thread(target=txt_find.addToBase())
             add.start()
             rem = threading.Thread(target=txt_find.removeFromBase())
             rem.start()
 
+
 if __name__ == '__main__':
-    d=0
-    while d==0:
+    d = 0
+    while d == 0:
         try:
             main()
         except:
-            d=0
+            d = 0
