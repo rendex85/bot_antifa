@@ -20,6 +20,11 @@ def main():
             peer = event.obj.peer_id
             from_id = event.obj.from_id
             txt_find = WorkWithText(peer, from_id, event.obj.text, vk)
+            if (event.obj.text == '!ладдер') or (event.obj.text == '!лад'):
+                lader = open(str(event.obj.peer_id) + '_lader' + '.txt', encoding="utf8")
+                strlader = lader.read()
+                vk.messages.send(peer_id=event.obj.peer_id, random_id=0, message=strlader)
+                lader.close()
             if (event.obj.text == '!пик' or event.obj.text == '!пикча'):
                 picture = GetPicture(peer, vk)
                 picture.pic()
