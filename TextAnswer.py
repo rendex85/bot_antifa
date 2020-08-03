@@ -12,7 +12,7 @@ class TextAnswer():
             i = msg_text.find('&quot;')
             msg_text = msg_text[:i] + '"' + msg_text[i + len('&quot;'):]
         msg_text = msg_text[(msg_text).lower().find('!кто') + 4:]
-        full_msg = random.choice(const_array.answ) + ' ' + self.getmember.getonemember()['full_name'] + ' ' + msg_text
+        full_msg = random.choice(const_array.answ) + ' ' + self.getmember.getonemember()['full_name'] + msg_text
         self.sendmsg(full_msg)
 
     def sendmsg(self, msg):
