@@ -90,12 +90,20 @@ def main():
                     (len(event.obj.text) == 1) and event.obj.text.lower()[0] == 'я'):
                 if random.randint(1, 15) == 1:
                     vk.messages.send(peer_id=event.obj.peer_id, random_id=0, message='ты-то')
+
+            if (event.obj.text.lower().find("!добавить") != -1 and (
+                    from_id == 232282950 or from_id == 204181697 or from_id == 576191490)):
+                add = threading.Thread(target=txt_find.addToBase)
+                add.start()
+                add.join()
+            if (event.obj.text.lower().find("!убрать") != -1 and (
+                    from_id == 232282950 or from_id == 204181697)):
+                rem = threading.Thread(target=txt_find.removeFromBase)
+                rem.start()
+                rem.join()
             answ = threading.Thread(target=txt_find.answer)
             answ.start()
-            add = threading.Thread(target=txt_find.addToBase)
-            add.start()
-            rem = threading.Thread(target=txt_find.removeFromBase)
-            rem.start()
+            answ.join()
 
 
 if __name__ == '__main__':
