@@ -1,7 +1,7 @@
 from random import *
 
 from Databases.Models import *
-from TextAnswer import *
+from WorkWith.WorkWithText import *
 
 
 class WorkWithText:

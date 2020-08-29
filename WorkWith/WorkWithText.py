@@ -1,13 +1,14 @@
-import const_array
-from WorkWithUsers import *
+from consts import const_array
+from WorkWith.WorkWithUsers import *
 
 
 class TextAnswer():
     def __init__(self, peer_id, vk):
         self.vk=vk
         self.peer_id=peer_id
-        self.getmember=MembersConf(self.peer_id, self.vk)
+
     def answerwho(self, msg_text):
+        self.getmember = MembersConf(self.peer_id, self.vk)
         while msg_text.find('&quot;') > 0:
             i = msg_text.find('&quot;')
             msg_text = msg_text[:i] + '"' + msg_text[i + len('&quot;'):]
