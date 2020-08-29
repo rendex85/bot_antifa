@@ -2,7 +2,7 @@ from peewee import *
 import os.path
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 db_path = os.path.join(BASE_DIR, "Bot.db")
-conn = SqliteDatabase(db_path)
+conn = SqliteDatabase(db_path,  pragmas={'foreign_keys': 1})
 
 
 class BaseModel(Model):
@@ -28,11 +28,11 @@ class Trigger(BaseModel):
         table_name = 'Trigger'
 
 
-class TextAnsw(BaseModel):
-    answer_id = AutoField(column_name='answer_id')
+class TriggerAnsw(BaseModel):
+    trig_answ_id = AutoField(column_name='trig_answ_id')
     trigger_link= ForeignKeyField(Trigger, column_name='trigger_link', on_delete='CASCADE')
     answer_link = ForeignKeyField(Answer, column_name='answer_link', on_delete='CASCADE')
 
     class Meta:
         database = conn
-        table_name = 'TextAnsw'
+        table_name = 'TriggerAnsw'
