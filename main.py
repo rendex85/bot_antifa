@@ -1,11 +1,11 @@
 import threading
 
+import requests
 from vk_api.bot_longpoll import VkBotLongPoll, VkBotEventType
 
 from Databases.TextAnswersQuery import *
-from GetPicture import *
-from ObjAnswer import *
-from const_txt import *
+from WorkWith.WorkWithPictures import *
+from consts.const_txt import *
 
 session = requests.Session()
 
@@ -26,16 +26,16 @@ def main():
                 vk.messages.send(peer_id=event.obj.peer_id, random_id=0, message=strlader)
                 lader.close()
             if (event.obj.text == '!пик' or event.obj.text == '!пикча'):
-                picture = GetPicture(peer, vk)
+                picture = GetPicture(peer, from_id, vk)
                 picture.pic()
             if (event.obj.text == '!гат' or event.obj.text == '!гатари'):
-                picture = GetPicture(peer, vk)
+                picture = GetPicture(peer, from_id, vk)
                 picture.gat()
             if (event.obj.text.lower().find('!кто') != (-1)):
                 answer_txt = TextAnswer(peer, vk)
                 answer_txt.answerwho(event.obj.text)
             if (event.obj.text == "чуш"):
-                answer_photo = PhotoAnswer(peer, from_id, vk, vk_session)
+                answer_photo = GetPicture(peer, from_id, vk_session, vk)
                 answer_photo.chush()
             if event.obj.text.lower().find('!инфа') != (-1):
                 strt = event.obj.text
@@ -54,7 +54,7 @@ def main():
                     vk.messages.send(peer_id=event.obj.peer_id, random_id=0,
                                      attachment=random.choice(const_array.gacha_list))
             if random.randint(1, 200) == 100:
-                answer_photo = PhotoAnswer(peer, from_id, vk, vk_session)
+                answer_photo = GetPicture(peer, from_id, vk_session, vk)
                 answer_photo.chush()
             if random.randint(1, 1000) == 228:
                 vk.messages.send(peer_id=event.obj.peer_id, random_id=0, attachment='doc204181697_493314661')
@@ -84,23 +84,19 @@ def main():
             if event.obj.text == '14':
                 vk.messages.send(peer_id=event.obj.peer_id, random_id=0, message="88")
                 vk.messages.send(peer_id=event.obj.peer_id, random_id=0, message="МЫ НЕ ОДОБРЯЕМ")
-
             if (event.obj.text == "[club178122731|*public178122731] top anime"):
                 vk.messages.send(peer_id=event.obj.peer_id, random_id=0, message="завали свой гнилой еблет")
-            if (event.obj.text == "!мать"):
-                vk.messages.send(peer_id=event.obj.peer_id, random_id=0, message="мать жива")
-            answ = threading.Thread(target=txt_find.answer())
+            if (event.obj.text.lower().find('я ') == 0) or (
+                    (len(event.obj.text) == 1) and event.obj.text.lower()[0] == 'я'):
+                if random.randint(1, 15) == 1:
+                    vk.messages.send(peer_id=event.obj.peer_id, random_id=0, message='ты-то')
+            answ = threading.Thread(target=txt_find.answer)
             answ.start()
-            add = threading.Thread(target=txt_find.addToBase())
+            add = threading.Thread(target=txt_find.addToBase)
             add.start()
-            rem = threading.Thread(target=txt_find.removeFromBase())
+            rem = threading.Thread(target=txt_find.removeFromBase)
             rem.start()
 
 
 if __name__ == '__main__':
-    d = 0
-    while d == 0:
-        try:
-            main()
-        except:
-            d = 0
+    main()
