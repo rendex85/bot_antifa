@@ -26,10 +26,10 @@ def main():
                 vk.messages.send(peer_id=event.obj.peer_id, random_id=0, message=strlader)
                 lader.close()
             if (event.obj.text == '!пик' or event.obj.text == '!пикча'):
-                picture = GetPicture(peer, from_id, vk)
+                picture = GetPicture(peer, from_id,vk_session, vk)
                 picture.pic()
             if (event.obj.text == '!гат' or event.obj.text == '!гатари'):
-                picture = GetPicture(peer, from_id, vk)
+                picture = GetPicture(peer, from_id,vk_session, vk)
                 picture.gat()
             if (event.obj.text.lower().find('!кто') != (-1)):
                 answer_txt = TextAnswer(peer, vk)
