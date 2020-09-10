@@ -107,8 +107,9 @@ def main():
 
 
 if __name__ == '__main__':
-    while True:
+    d = 0
+    while d == 0:
         try:
             main()
-        except ():
-            print('error')
+        except:
+            d = 0
