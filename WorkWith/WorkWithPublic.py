@@ -12,4 +12,3 @@ class WallWorker():
             else:
                 self.public = self.msg[strtssyl + len("vk.com/"): endssyl]
         clown=vk.groups.getById(group_id=self.public, fields='counters')
-        print(int(clown[0]['id']))
