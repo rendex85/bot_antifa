@@ -22,7 +22,6 @@ class MembersConf():
 
 
     def getonemember(self):
-        print(self.list_of_members)
         return (random.choice(self.list_of_members))
 
 
