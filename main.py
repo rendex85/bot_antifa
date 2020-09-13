@@ -19,24 +19,28 @@ def main():
         if event.type == VkBotEventType.MESSAGE_NEW:
             peer = event.obj.peer_id
             from_id = event.obj.from_id
+
             txt_find = WorkWithText(peer, from_id, event.obj.text, vk)
-            if (event.obj.text == '!ладдер') or (event.obj.text == '!лад'):
+            picture = GetPicture(peer, from_id, vk_session, vk)
+            if (event.obj.text.lower() == '!ладдер') or (event.obj.text.lower() == '!лад'):
                 lader = open(str(event.obj.peer_id) + '_lader' + '.txt', encoding="utf8")
                 strlader = lader.read()
                 vk.messages.send(peer_id=event.obj.peer_id, random_id=0, message=strlader)
                 lader.close()
-            if (event.obj.text == '!пик' or event.obj.text == '!пикча'):
-                picture = GetPicture(peer, from_id,vk_session, vk)
+            if (
+                    event.obj.text.lower() == '!пик' or event.obj.text.lower() == '!пикча' or event.obj.text.lower() == '[club178122731|@public178122731] !пик'):
                 picture.pic()
-            if (event.obj.text == '!гат' or event.obj.text == '!гатари'):
-                picture = GetPicture(peer, from_id,vk_session, vk)
+            if (
+                    event.obj.text.lower() == '!гат' or event.obj.text.lower() == '!гатари' or event.obj.text.lower() == '[club178122731|@public178122731] !гат'):
                 picture.gat()
+            if (
+                    event.obj.text.lower() == "!нпик" or event.obj.text.lower() == "!нормалпик" or event.obj.text.lower() == '[club178122731|@public178122731] !нпик'):
+                picture.gar()
             if (event.obj.text.lower().find('!кто') != (-1)):
                 answer_txt = TextAnswer(peer, vk)
                 answer_txt.answerwho(event.obj.text)
-            if (event.obj.text == "чуш"):
-                answer_photo = GetPicture(peer, from_id, vk_session, vk)
-                answer_photo.chush()
+            if (event.obj.text.lower() == "чуш"):
+                picture.chush()
             if event.obj.text.lower().find('!инфа') != (-1):
                 strt = event.obj.text
                 randosha = str(random.randint(1, 100))
@@ -54,8 +58,7 @@ def main():
                     vk.messages.send(peer_id=event.obj.peer_id, random_id=0,
                                      attachment=random.choice(const_array.gacha_list))
             if random.randint(1, 200) == 100:
-                answer_photo = GetPicture(peer, from_id, vk_session, vk)
-                answer_photo.chush()
+                picture.chush()
             if random.randint(1, 1000) == 228:
                 vk.messages.send(peer_id=event.obj.peer_id, random_id=0, attachment='doc204181697_493314661')
             if (event.obj.text.lower().find('сука') != (-1)) or (event.obj.text.lower().find('cerf') != (-1)):
@@ -90,7 +93,14 @@ def main():
                     (len(event.obj.text) == 1) and event.obj.text.lower()[0] == 'я'):
                 if random.randint(1, 15) == 1:
                     vk.messages.send(peer_id=event.obj.peer_id, random_id=0, message='ты-то')
-
+            if (event.obj.text.lower() == "!клавиатура"):
+                keyboard = open("keyboards/default.json", "r", encoding="UTF-8").read()
+                vk.messages.send(peer_id=event.obj.peer_id, random_id=0, message='дерзайте, хули', keyboard=keyboard)
+            if (
+                    event.obj.text.lower() == "!закрыть" or event.obj.text.lower() == '[club178122731|@public178122731] !закрыть'):
+                keyboard = open("keyboards/empty.json", "r", encoding="UTF-8").read()
+                vk.messages.send(peer_id=event.obj.peer_id, random_id=0, message='клавиатура закрыта',
+                                 keyboard=keyboard)
             if (event.obj.text.lower().find("!добавить") != -1 and (
                     from_id == 232282950 or from_id == 204181697 or from_id == 576191490)):
                 add = threading.Thread(target=txt_find.addToBase)
