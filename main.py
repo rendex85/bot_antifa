@@ -19,7 +19,6 @@ def main():
         if event.type == VkBotEventType.MESSAGE_NEW:
             peer = event.obj.peer_id
             from_id = event.obj.from_id
-            print(event.obj.text)
             txt_find = WorkWithText(peer, from_id, event.obj.text, vk)
             picture = GetPicture(peer, from_id, vk_session, vk)
             if (event.obj.text.lower() == '!ладдер') or (event.obj.text.lower() == '!лад'):
