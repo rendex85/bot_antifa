@@ -28,13 +28,13 @@ def main():
                 vk.messages.send(peer_id=event.obj.peer_id, random_id=0, message=strlader)
                 lader.close()
             if (
-                    event.obj.text.lower() == '!пик' or event.obj.text.lower() == '!пикча' or event.obj.text.lower() == '[club178122731|@public178122731] !пик'):
+                    event.obj.text.lower() == '!пик' or event.obj.text.lower() == '!пикча' or event.obj.text.lower() == '[club178122731|@public178122731] !пик' or event.obj.text.lower() == '[мы против фашизма |*public178122731] !пик'):
                 picture.pic()
             if (
-                    event.obj.text.lower() == '!гат' or event.obj.text.lower() == '!гатари' or event.obj.text.lower() == '[club178122731|@public178122731] !гат'):
+                    event.obj.text.lower() == '!гат' or event.obj.text.lower() == '!гатари' or event.obj.text.lower() == '[club178122731|@public178122731] !гат'or event.obj.text.lower() == '[мы против фашизма |*public178122731] !пик'):
                 picture.gat()
             if (
-                    event.obj.text.lower() == "!нпик" or event.obj.text.lower() == "!нормалпик" or event.obj.text.lower() == '[club178122731|@public178122731] !нпик'):
+                    event.obj.text.lower() == "!нпик" or event.obj.text.lower() == "!нормалпик" or event.obj.text.lower() == '[club178122731|@public178122731] !нпик'or event.obj.text.lower() == '[мы против фашизма |*public178122731] !пик'):
                 picture.gar()
             if (event.obj.text.lower().find('!кто') != (-1)):
                 answer_txt = TextAnswer(peer, vk)
@@ -97,7 +97,7 @@ def main():
                 keyboard = open("keyboards/default.json", "r", encoding="UTF-8").read()
                 vk.messages.send(peer_id=event.obj.peer_id, random_id=0, message='дерзайте, хули', keyboard=keyboard)
             if (
-                    event.obj.text.lower() == "!закрыть" or event.obj.text.lower() == '[club178122731|@public178122731] !закрыть'):
+                    event.obj.text.lower() == "!закрыть" or event.obj.text.lower() == '[club178122731|@public178122731] !закрыть'or event.obj.text.lower() == '[мы против фашизма |*public178122731] !пик'):
                 keyboard = open("keyboards/empty.json", "r", encoding="UTF-8").read()
                 vk.messages.send(peer_id=event.obj.peer_id, random_id=0, message='клавиатура закрыта',
                                  keyboard=keyboard)

@@ -26,7 +26,6 @@ class GetPicture:
         randomnum = random.choice([0, 1])
         choosen_alb = random.choice(const_array.photo_garik_list[randomnum])
         photo_url=self.get_img(const_array.account_garik_list[randomnum], choosen_alb, 'photo' + const_array.account_garik_list[randomnum], 1)
-        print(photo_url)
         attach = self.load.loadImg(photo_url)
         self.post(attach)
 
