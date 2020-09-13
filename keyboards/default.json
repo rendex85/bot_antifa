@@ -4,23 +4,30 @@
     [{
       "action": {
         "type": "text",
-        "label": "top anime"
+        "label": "!пик"
       },
-      "color": "positive"
+      "color": "primary"
     },
       {
         "action": {
           "type": "text",
-          "label": "weather"
+          "label": "!нпик"
         },
         "color": "positive"
+      },
+    {
+        "action": {
+          "type": "text",
+          "label": "!гат"
+        },
+        "color": "secondary"
       }],
     [{
       "action": {
         "type": "text",
-        "label": "translate"
+        "label": "!закрыть"
       },
-      "color": "default"
+      "color": "negative"
     }]
   ]
 }
