@@ -30,10 +30,10 @@ def main():
                     event.obj.text.lower() == '!пик' or event.obj.text.lower() == '!пикча' or event.obj.text.lower() == '[club178122731|@public178122731] !пик' or event.obj.text.lower() == '[club178122731|мы против фашизма] !пик'):
                 picture.pic()
             if (
-                    event.obj.text.lower() == '!гат' or event.obj.text.lower() == '!гатари' or event.obj.text.lower() == '[club178122731|@public178122731] !гат'or event.obj.text.lower() == '[club178122731|мы против фашизма] !пик'):
+                    event.obj.text.lower() == '!гат' or event.obj.text.lower() == '!гатари' or event.obj.text.lower() == '[club178122731|@public178122731] !гат'or event.obj.text.lower() == '[club178122731|мы против фашизма] !гат'):
                 picture.gat()
             if (
-                    event.obj.text.lower() == "!нпик" or event.obj.text.lower() == "!нормалпик" or event.obj.text.lower() == '[club178122731|@public178122731] !нпик'or event.obj.text.lower() == '[club178122731|мы против фашизма] !пик'):
+                    event.obj.text.lower() == "!нпик" or event.obj.text.lower() == "!нормалпик" or event.obj.text.lower() == '[club178122731|@public178122731] !нпик'or event.obj.text.lower() == '[club178122731|мы против фашизма] !нпик'):
                 picture.gar()
             if (event.obj.text.lower().find('!кто') != (-1)):
                 answer_txt = TextAnswer(peer, vk)
