@@ -19,7 +19,7 @@ def main():
         if event.type == VkBotEventType.MESSAGE_NEW:
             peer = event.obj.peer_id
             from_id = event.obj.from_id
-
+            print(event.obj.text)
             txt_find = WorkWithText(peer, from_id, event.obj.text, vk)
             picture = GetPicture(peer, from_id, vk_session, vk)
             if (event.obj.text.lower() == '!ладдер') or (event.obj.text.lower() == '!лад'):
@@ -28,13 +28,13 @@ def main():
                 vk.messages.send(peer_id=event.obj.peer_id, random_id=0, message=strlader)
                 lader.close()
             if (
-                    event.obj.text.lower() == '!пик' or event.obj.text.lower() == '!пикча' or event.obj.text.lower() == '[club178122731|@public178122731] !пик' or event.obj.text.lower() == '[мы против фашизма |*public178122731] !пик'):
+                    event.obj.text.lower() == '!пик' or event.obj.text.lower() == '!пикча' or event.obj.text.lower() == '[club178122731|@public178122731] !пик' or event.obj.text.lower() == '[club178122731|мы против фашизма] !пик'):
                 picture.pic()
             if (
-                    event.obj.text.lower() == '!гат' or event.obj.text.lower() == '!гатари' or event.obj.text.lower() == '[club178122731|@public178122731] !гат'or event.obj.text.lower() == '[мы против фашизма |*public178122731] !пик'):
+                    event.obj.text.lower() == '!гат' or event.obj.text.lower() == '!гатари' or event.obj.text.lower() == '[club178122731|@public178122731] !гат'or event.obj.text.lower() == '[club178122731|мы против фашизма] !пик'):
                 picture.gat()
             if (
-                    event.obj.text.lower() == "!нпик" or event.obj.text.lower() == "!нормалпик" or event.obj.text.lower() == '[club178122731|@public178122731] !нпик'or event.obj.text.lower() == '[мы против фашизма |*public178122731] !пик'):
+                    event.obj.text.lower() == "!нпик" or event.obj.text.lower() == "!нормалпик" or event.obj.text.lower() == '[club178122731|@public178122731] !нпик'or event.obj.text.lower() == '[club178122731|мы против фашизма] !пик'):
                 picture.gar()
             if (event.obj.text.lower().find('!кто') != (-1)):
                 answer_txt = TextAnswer(peer, vk)
@@ -82,7 +82,7 @@ def main():
             if event.obj.text.lower() == 'а':
                 if random.randint(1, 3) == 3:
                     vk.messages.send(peer_id=event.obj.peer_id, random_id=0, attachment='photo-147805525_456240041')
-            if event.obj.text.lower().find('фаши') != (-1):
+            if (event.obj.text.lower().find('фаши') != (-1)) and(event.obj.text.lower().find('мы против фашизма') == (-1)):
                 vk.messages.send(peer_id=event.obj.peer_id, random_id=0, message=(fascist))
             if event.obj.text == '14':
                 vk.messages.send(peer_id=event.obj.peer_id, random_id=0, message="88")
@@ -97,7 +97,7 @@ def main():
                 keyboard = open("keyboards/default.json", "r", encoding="UTF-8").read()
                 vk.messages.send(peer_id=event.obj.peer_id, random_id=0, message='дерзайте, хули', keyboard=keyboard)
             if (
-                    event.obj.text.lower() == "!закрыть" or event.obj.text.lower() == '[club178122731|@public178122731] !закрыть'or event.obj.text.lower() == '[мы против фашизма |*public178122731] !пик'):
+                    event.obj.text.lower() == "!закрыть" or event.obj.text.lower() == '[club178122731|@public178122731] !закрыть'or event.obj.text.lower() == '[club178122731|мы против фашизма] !закрыть'):
                 keyboard = open("keyboards/empty.json", "r", encoding="UTF-8").read()
                 vk.messages.send(peer_id=event.obj.peer_id, random_id=0, message='клавиатура закрыта',
                                  keyboard=keyboard)
