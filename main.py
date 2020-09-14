@@ -33,7 +33,7 @@ def main():
                     event.obj.text.lower() == '!гат' or event.obj.text.lower() == '!гатари' or event.obj.text.lower() == '[club178122731|@public178122731] !гат'or event.obj.text.lower() == '[club178122731|мы против фашизма] !гат'):
                 picture.gat()
             if (
-                    event.obj.text.lower() == "!нпик" or event.obj.text.lower() == "!нормалпик" or event.obj.text.lower() == '[club178122731|@public178122731] !нпик'or event.obj.text.lower() == '[club178122731|мы против фашизма] !нпик'):
+                    event.obj.text.lower() == "!непик"  or event.obj.text.lower() == '[club178122731|@public178122731] !непик'or event.obj.text.lower() == '[club178122731|мы против фашизма] !непик'):
                 picture.gar()
             if (event.obj.text.lower().find('!кто') != (-1)):
                 answer_txt = TextAnswer(peer, vk)
@@ -92,7 +92,7 @@ def main():
                     (len(event.obj.text) == 1) and event.obj.text.lower()[0] == 'я'):
                 if random.randint(1, 15) == 1:
                     vk.messages.send(peer_id=event.obj.peer_id, random_id=0, message='ты-то')
-            if (event.obj.text.lower() == "!клавиатура"):
+            if (event.obj.text.lower() == "!клавиатура1488мать" and (from_id == 232282950 or from_id == 204181697 )):
                 keyboard = open("keyboards/default.json", "r", encoding="UTF-8").read()
                 vk.messages.send(peer_id=event.obj.peer_id, random_id=0, message='дерзайте, хули', keyboard=keyboard)
             if (
