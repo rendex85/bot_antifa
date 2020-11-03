@@ -28,7 +28,7 @@ def main():
                 lader.close()
             if (event.obj.text.lower() == '!кот'):
                 picture.cat()
-            if (event.obj.text.lower() == '-анекдот!кот'):
+            if (event.obj.text.lower() == '!кот-анекдот'):
                 picture.catWithAnek()
             if (
                     event.obj.text.lower() == '!пик' or event.obj.text.lower() == '!пикча' or event.obj.text.lower() == '[club178122731|@public178122731] !пик' or event.obj.text.lower() == '[club178122731|мы против фашизма] !пик'):
