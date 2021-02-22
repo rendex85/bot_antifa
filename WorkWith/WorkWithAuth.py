@@ -1,4 +1,5 @@
 from vk_api import vk_api
+from vk_api.bot_longpoll import VkBotLongPoll
 
 from consts import login_consts
 
@@ -12,3 +13,10 @@ class AuthTools():
         except vk_api.AuthError as error_msg:
             print(error_msg)
         return vk_session1.get_api()
+
+    @staticmethod
+    def authByGroup():
+        vk_session = vk_api.VkApi(token=login_consts.token)
+        longpoll = VkBotLongPoll(vk_session, login_consts.public)
+        vk = vk_session.get_api()
+        return vk, longpoll
