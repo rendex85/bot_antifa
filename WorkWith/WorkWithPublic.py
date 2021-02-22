@@ -27,8 +27,8 @@ class WallWorker:
         countofposts = self.user_vk.wall.get(owner_id="-" + str(self.public))["count"]
         # если я еще чтото буду длеать с волл гетом надо не заьыть про этот иф и ограничение на 100 постов
         if countofposts > 200:
-            postDict = self.user_vk.wall.get(owner_id="-" + str(self.public), offset=random.randint(0,countofposts-101), count=100)
-            anek_choice = choice(list(postDict["items"]))
+            post_dict = self.user_vk.wall.get(owner_id="-" + str(self.public), offset=random.randint(0,countofposts-101), count=100)
+            anek_choice = choice(list(post_dict["items"]))
             while anek_choice["text"] == "":
-                anek_choice = choice(list(postDict["items"]))
+                anek_choice = choice(list(post_dict["items"]))
             return anek_choice

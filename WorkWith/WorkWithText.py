@@ -1,20 +1,18 @@
-from consts import const_array
 from WorkWith.WorkWithUsers import *
+from consts import const_array
 
 
-class TextAnswer():
-    def __init__(self, peer_id, vk):
-        self.vk=vk
-        self.peer_id=peer_id
+class TextAnswer:
+    def __init__(self, obj, vk):
+        self.vk = vk
+        self.obj = obj
+        self.getmember = MembersConf(self.obj.peer_id, self.vk)
 
-    def answerwho(self, msg_text):
-        self.getmember = MembersConf(self.peer_id, self.vk)
+    def answer_who(self):
+        msg_text = self.obj.text
         while msg_text.find('&quot;') > 0:
             i = msg_text.find('&quot;')
             msg_text = msg_text[:i] + '"' + msg_text[i + len('&quot;'):]
-        msg_text = msg_text[(msg_text).lower().find('!кто') + 4:]
+        msg_text = msg_text[msg_text.lower().find('!кто') + 4:]
         full_msg = random.choice(const_array.answ) + ' ' + self.getmember.getonemember()['full_name'] + msg_text
-        self.sendmsg(full_msg)
-
-    def sendmsg(self, msg):
-        self.vk.messages.send(peer_id=self.peer_id, random_id=0, message=msg)
+        return full_msg
