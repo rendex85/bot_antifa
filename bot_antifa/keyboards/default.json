@@ -1,0 +1,33 @@
+{
+  "one_time": false,
+  "buttons": [
+    [{
+      "action": {
+        "type": "text",
+        "label": "!пик"
+      },
+      "color": "primary"
+    },
+      {
+        "action": {
+          "type": "text",
+          "label": "!непик"
+        },
+        "color": "positive"
+      },
+    {
+        "action": {
+          "type": "text",
+          "label": "!гат"
+        },
+        "color": "secondary"
+      }],
+    [{
+      "action": {
+        "type": "text",
+        "label": "!закрыть"
+      },
+      "color": "negative"
+    }]
+  ]
+}
