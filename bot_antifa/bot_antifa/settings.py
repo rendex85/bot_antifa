@@ -34,6 +34,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'antifa_main',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -158,4 +159,11 @@ REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
 }
+AUTH_USER_MODEL = 'antifa_main.User'
 
+AUTH_VK = {
+    "token": env('token_group'),
+    "login": env('login_vk'),
+    "password": env('password_vk'),
+    "public": env('public_id'),
+}

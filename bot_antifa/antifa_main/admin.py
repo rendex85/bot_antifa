@@ -1,3 +1,5 @@
 from django.contrib import admin
+from antifa_main.models import Trigger, ResultOfTrigger
 
-# Register your models here.
+admin.site.register(Trigger)
+admin.site.register(ResultOfTrigger)
