@@ -149,22 +149,3 @@ com_crashlytics_export_strings.xml
 crashlytics.properties
 crashlytics-build.properties
 fabric.properties
-
-#My db
-Databases/Bot.db
-
-#My env
-bot_antifa/bot_antifa/.env
-bot_antifa/.idea
-
-__pycache__/*
-.idea
-**/.idea
-mysql-data
-dbs
-/application/workprogramsapp/migrations
-**/migrations/*
-/application/discipline_code
-**/.env
-**/.env.production
-
