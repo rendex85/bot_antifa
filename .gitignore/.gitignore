@@ -153,5 +153,5 @@ fabric.properties
 #My db
 Databases/Bot.db
 
-#My db
-Databases/Bot.db
+#My env
+bot_antifa/bot_antifa/.env
