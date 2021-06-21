@@ -2,9 +2,10 @@ import random
 
 
 class MembersConf():
-    def __init__(self, peer_id, vk):
+    def __init__(self, obj, vk):
         self.vk = vk
-        self.peer_id = peer_id
+        self.obj=obj
+        self.peer_id = obj.peer_id
         self.list_of_members = list()
         self.admin_list = list()
         self.memb_dict = dict(self.vk.messages.getConversationMembers(peer_id=self.peer_id))
@@ -20,15 +21,11 @@ class MembersConf():
             if ('is_admin' in i) and (i['is_admin'] == True):
                 self.admin_list.append({'id': i['member_id']})
 
-
     def getonemember(self):
         return (random.choice(self.list_of_members))
 
 
-class UserAnalyze():
-    def __init__(self, from_id, vk):
-        self.vk = vk
-        self.from_id = from_id
-
-    def getuser(self, params):
-        return (self.vk.users.get(user_ids=self.from_id, fields=params))
+class UserAnalyze:
+    @staticmethod
+    def getuser(vk, from_id, params):
+        return vk.users.get(user_ids=from_id, fields=params)
