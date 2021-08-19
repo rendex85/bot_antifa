@@ -2,14 +2,12 @@ import threading
 
 from vk_api.bot_longpoll import VkBotEventType
 
+from bot_logic.Databases.UtilsDB import ConnectDB
 from bot_logic.EventHandler.registrator import list_of_triggers
 from bot_logic.WorkWith.WorkWithStatic.WorkWithAuth import AuthTools
 
 
-class MainLoop(threading.Thread):
-    def __init__(self):
-        threading.Thread.__init__(self)
-
+class MainLoop:
     TURN_ON = True
 
     def initiate_trigger(self, trigger, vk, obj):
@@ -17,6 +15,9 @@ class MainLoop(threading.Thread):
 
     def run(self):
         vk, longpoll, vk_session = AuthTools.authByGroup()
+        database = ConnectDB.get_connection()
+        ConnectDB.create_tables(database)
+        database.close()
         for event in longpoll.listen():
             threads = []
             if event.type == VkBotEventType.MESSAGE_NEW and self.TURN_ON:
@@ -26,5 +27,7 @@ class MainLoop(threading.Thread):
                     new_thread.start()
                     new_thread.join()
 
-main_loop = MainLoop()
-main_loop.start()
+
+if __name__ == '__main__':
+    main_loop = MainLoop()
+    main_loop.run()

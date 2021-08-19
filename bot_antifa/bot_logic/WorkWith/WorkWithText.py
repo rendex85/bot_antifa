@@ -1,16 +1,16 @@
 import random
 
-from antifa_main.models import Trigger, ResultOfTrigger
+from bot_logic.Databases.Models import Trigger, Answer, TriggerAnswer
 from bot_logic.WorkWith.WorkWithStatic.WorkWithUsers import MembersConf
 from bot_logic.consts import const_array
+from bot_logic.consts.login_consts import admin_id
 from bot_logic.utils.RegexUtils import compare_add_text, compare_add_media
 
 
-class GetText():
+class GetText:
     def __init__(self, obj, vk):
         self.obj = obj
         self.vk = vk
-
 
     def answer_who(self):
         getmember = MembersConf(self.obj, self.vk)
@@ -27,23 +27,3 @@ class GetText():
             '!инфа') + 5:] + " с вероятностью " + str(random.randint(0, 100)) + "%"
         return full_msg
 
-    def add_to_db(self):
-        msg_text = str(self.obj.text)
-        if compare_add_text(msg_text):
-            list_of_parameters = msg_text[9:].split("|")
-            result = ResultOfTrigger.objects.create(type_media=1, result_of_trigger=list_of_parameters[1])
-            try:
-                strict_data = bool(list_of_parameters[2])
-            except IndexError:
-                strict_data = False
-            try:
-                trigger = Trigger.objects.get(name=list_of_parameters[0])
-            except Trigger.DoesNotExist:
-                trigger = Trigger.objects.create(name=list_of_parameters[0], strict=strict_data)
-            trigger.result.add(result)
-            trigger.save()
-            return f"Условие {list_of_parameters[0]} успешно добавлено!"
-        elif compare_add_media(self.obj.text):
-            pass
-        else:
-            return "Условие неверное"

@@ -1,11 +1,12 @@
 import random
+from abc import ABCMeta, abstractmethod
 from typing import List
 
 from bot_logic.WorkWith.MainWorkWith import CompareWorkWithAll
 from bot_logic.utils.DataClassUtils import Message
 
 
-class BaseHandler:
+class BaseHandler(metaclass=ABCMeta):
     trigger_in: List[str] = []
     trigger_strict: List[str] = []
     trigger_not_strict: List[str] = []
@@ -50,6 +51,7 @@ class BaseHandler:
                 self.post()
                 return True
 
+    @abstractmethod
     def preHandler(self):
         """
         Функция для кастомных условий

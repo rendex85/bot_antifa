@@ -1,38 +1,55 @@
 from peewee import *
-import os.path
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-db_path = os.path.join(BASE_DIR, "Bot.db")
-conn = SqliteDatabase(db_path,  pragmas={'foreign_keys': 1})
+
+from bot_logic.consts.login_consts import db_host, db_port, db_password, db_user
 
 
 class BaseModel(Model):
-    conn.connect()
     class Meta:
-        database = conn
+        database = PostgresqlDatabase('bot_db', user=db_user, password=db_password,
+                                      host=db_host, port=int(db_port))
 
+
+# Блок !добавить
 class Answer(BaseModel):
-    answer_id = AutoField(column_name='answer_id')
-    answer_text = TextField(column_name='answer_text')
-
-    class Meta:
-        database = conn
-        table_name = 'Answer'
+    answer_id = PrimaryKeyField()
+    answer_text = TextField(null=True)
+    answer_picture = TextField(null=True)
+    answer_doc = TextField(null=True)
+    answer_video = TextField(null=True)
+    answer_music = TextField(null=True)
 
 
 class Trigger(BaseModel):
-    trigger_id = AutoField(column_name='trigger_id')
-    trigger_text = TextField(column_name='trigger_text')
+    STATUS_CHOICES = (
+        (0, 'strict'),
+        (1, 'in'),)
+    trigger_id = PrimaryKeyField()
+    trigger_text = TextField()
+    trigger_chance = IntegerField(null=True)
+    trigger_type = IntegerField(choices=STATUS_CHOICES)
+    conference_id = IntegerField(null=True)
 
-    class Meta:
-        database = conn
-        table_name = 'Trigger'
+
+class TriggerAnswer(BaseModel):
+    trigger_answer_id = PrimaryKeyField()
+    trigger_link = ForeignKeyField(Trigger, on_delete='CASCADE')
+    answer_link = ForeignKeyField(Answer, on_delete='CASCADE')
 
 
-class TriggerAnsw(BaseModel):
-    trig_answ_id = AutoField(column_name='trig_answ_id')
-    trigger_link= ForeignKeyField(Trigger, column_name='trigger_link', on_delete='CASCADE')
-    answer_link = ForeignKeyField(Answer, column_name='answer_link', on_delete='CASCADE')
+# Блок пермишеннов
+class Permission(BaseModel):
+    STATUS_CHOICES = (
+        (0, 'For other users/Admins'),
+        (1, 'No one'),)
+    user_id = PrimaryKeyField()
+    user_vk_id = IntegerField(null=True)
+    conference_id = IntegerField(null=True)
+    command_name = TextField(null=True)
+    permission_status = IntegerField(choices=STATUS_CHOICES, default=0)
 
-    class Meta:
-        database = conn
-        table_name = 'TriggerAnsw'
+
+class UserStuff(BaseModel):
+    user_id = PrimaryKeyField()
+    user_vk_id = IntegerField()
+    crud_triggers = BooleanField(null=True)
+    crud_bans = BooleanField(null=True)
