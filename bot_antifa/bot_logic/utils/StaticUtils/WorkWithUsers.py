@@ -1,10 +1,11 @@
 import random
 
 
-class MembersConf():
+class MembersConf:
+    # Легаси код, не хочу в этом кале разбираться
     def __init__(self, obj, vk):
         self.vk = vk
-        self.obj=obj
+        self.obj = obj
         self.peer_id = obj.peer_id
         self.list_of_members = list()
         self.admin_list = list()
