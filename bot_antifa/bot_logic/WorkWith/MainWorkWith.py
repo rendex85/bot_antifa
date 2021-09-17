@@ -4,9 +4,9 @@ class BaseWorkWith:
         self.obj = obj
 
 
-from bot_logic.WorkWith.WorkWithDB import DataBaseTrigger, PermissionsWorker
-from bot_logic.WorkWith.WorkWithPictures import GetPicture
-from bot_logic.WorkWith.WorkWithText import GetText
+from bot_antifa.bot_logic.WorkWith.WorkWithDB import DataBaseTrigger, PermissionsWorker
+from bot_antifa.bot_logic.WorkWith.WorkWithPictures import GetPicture
+from bot_antifa.bot_logic.WorkWith.WorkWithText import GetText
 
 
 class CompareWorkWithAll(GetPicture, GetText, DataBaseTrigger, PermissionsWorker):
