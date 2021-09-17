@@ -1,16 +1,13 @@
 import random
 
-from .WorkWithStatic.WorkWithAuth import AuthTools
-from .WorkWithStatic.WorkWithUpload import PhotoUpload
-from .WorkWithStatic.WorkWithUsers import UserAnalyze
+from .MainWorkWith import BaseWorkWith
 from ..consts import const_array
+from ..utils.WorkWithUtils.WorkWithAuth import AuthTools
+from ..utils.WorkWithUtils.WorkWithUpload import PhotoUpload
+from ..utils.WorkWithUtils.WorkWithUsers import UserAnalyze
 
 
-class GetPicture:
-    def __init__(self, obj, vk):
-        self.obj = obj
-        self.vk = vk
-
+class GetPicture(BaseWorkWith):
     def pic(self):
         return self.get_img('-84187544', 'wall', 'photo-84187544')
 
@@ -28,12 +25,21 @@ class GetPicture:
         attach = PhotoUpload.load_img(AuthTools.authByGroup()[2], "https://thiscatdoesnotexist.com/")
         return attach
 
+    def casper_cat(self):
+        casper_attach = self.get_img_from_private_album("299186552", "276063968", "photo299186552", 1)
+        return casper_attach
+
     def gar(self):
         random_num = random.choice([0, 1])
         choose_alb = random.choice(const_array.photo_garik_list[random_num])
         photo_url = self.get_img(const_array.account_garik_list[random_num], choose_alb,
-                                'photo' + const_array.account_garik_list[random_num], 1)
-        attach = PhotoUpload.load_img(AuthTools.authByGroup()[2],photo_url)
+                                 'photo' + const_array.account_garik_list[random_num], 1)
+        attach = PhotoUpload.load_img(AuthTools.authByGroup()[2], photo_url)
+        return attach
+
+    def get_img_from_private_album(self, owner, album, photo_obj_start, type_photo):
+        photo_url = self.get_img(owner=owner, album=album, photo_obj_start=photo_obj_start, type=type_photo)
+        attach = PhotoUpload.load_img(AuthTools.authByGroup()[2], photo_url)
         return attach
 
     """

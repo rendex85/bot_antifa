@@ -42,7 +42,7 @@ class Permission(BaseModel):
         (0, 'For other users/Admins'),
         (1, 'No one'),)
     user_id = PrimaryKeyField()
-    user_vk_id = IntegerField(null=True)
+    user_vk_id = TextField(null=True)
     conference_id = IntegerField(null=True)
     command_name = TextField(null=True)
     permission_status = IntegerField(choices=STATUS_CHOICES, default=0)

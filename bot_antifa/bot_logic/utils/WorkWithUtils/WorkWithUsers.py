@@ -20,10 +20,13 @@ class MembersConf:
                  'admin': 'false'})
         for i in self.memb_dict['items']:
             if ('is_admin' in i) and (i['is_admin'] == True):
-                self.admin_list.append({'id': i['member_id']})
+                self.admin_list.append(i['member_id'])
 
     def getonemember(self):
         return (random.choice(self.list_of_members))
+
+    def get_admin_list(self):
+        return self.admin_list
 
 
 class UserAnalyze:

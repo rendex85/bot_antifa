@@ -1,11 +1,12 @@
 import random
 
 from bot_logic.EventHandler.HandlerKernel import BaseHandler
+from bot_logic.WorkWith.WorkWithDB import DataBaseTrigger
 from bot_logic.consts import const_array, const_txt
 
 
 class WhoHandler(BaseHandler):
-    trigger_in = ["!кто", ]
+    trigger_in = ["!кто", "!rnj"]
 
     def preHandler(self):
         self.message_data.message = self.working_methods.answer_who()
@@ -23,6 +24,27 @@ class AddHandler(BaseHandler):
 
     def preHandler(self):
         self.message_data.message = self.working_methods.add_to_db()
+
+class RemoveHandler(BaseHandler):
+    trigger_in = ["!убрать", ]
+
+    def preHandler(self):
+        self.message_data.message = self.working_methods.remove_from_db()
+
+
+
+class TriggerHandler(BaseHandler):
+    trigger_in = [""]
+
+    # Если честно - говнокод
+    def preHandler(self):
+        trigger_id, chance, command = self.working_methods.get_list_of_triggers()
+        if trigger_id and random.randint(0, chance) == 0:
+            self.command = command
+            return_dict = DataBaseTrigger.get_answer_from_db(trigger_id)
+            self.message_data.message = return_dict["text"]
+        else:
+            self.do_post = False
 
 
 class PicHandler(BaseHandler):
@@ -107,3 +129,25 @@ class CerfAHandler(BaseHandler):
 
     def preHandler(self):
         self.message_data.attachment = const_array.cerf_list
+
+
+class BanHandler(BaseHandler):
+    trigger_in = ["!бан"]
+    trigger_not_in = ["!разбан"]
+
+    def preHandler(self):
+        self.message_data.message = self.working_methods.ban()
+
+
+class UnbanBanHandler(BaseHandler):
+    trigger_in = ["!разбан"]
+
+    def preHandler(self):
+        self.message_data.message = self.working_methods.unban()
+
+
+class rabotat(BaseHandler):
+    trigger_strict = ["!каспер", "!кот каспер", "!каспир", "!кот_каспер"]
+
+    def preHandler(self):
+        self.message_data.attachment = self.working_methods.casper_cat()

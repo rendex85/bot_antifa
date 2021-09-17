@@ -17,7 +17,6 @@ class AuthTools():
 
     @staticmethod
     def authByGroup():
-        print(login_consts.public)
         vk_session = vk_api.VkApi(token=login_consts.token)
         longpoll = VkBotLongPoll(vk_session, login_consts.public)
         vk = vk_session.get_api()
