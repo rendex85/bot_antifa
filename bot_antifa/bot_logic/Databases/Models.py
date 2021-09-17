@@ -1,6 +1,6 @@
 from peewee import *
 
-from bot_antifa.bot_logic.consts.login_consts import db_host, db_port, db_password, db_user
+from ..consts.login_consts import db_host, db_port, db_password, db_user
 
 
 class BaseModel(Model):

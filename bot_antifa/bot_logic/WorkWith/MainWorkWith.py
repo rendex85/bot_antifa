@@ -1,12 +1,15 @@
+
+
+
 class BaseWorkWith:
     def __init__(self, obj, vk):
         self.vk = vk
         self.obj = obj
 
 
-from bot_antifa.bot_logic.WorkWith.WorkWithDB import DataBaseTrigger, PermissionsWorker
-from bot_antifa.bot_logic.WorkWith.WorkWithPictures import GetPicture
-from bot_antifa.bot_logic.WorkWith.WorkWithText import GetText
+from .WorkWithDB import DataBaseTrigger, PermissionsWorker
+from .WorkWithPictures import GetPicture
+from .WorkWithText import GetText
 
 
 class CompareWorkWithAll(GetPicture, GetText, DataBaseTrigger, PermissionsWorker):
