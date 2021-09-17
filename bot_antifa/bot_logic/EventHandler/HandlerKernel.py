@@ -2,9 +2,9 @@ import random
 from abc import ABCMeta, abstractmethod
 from typing import List
 
-from bot_logic.Permissions import PermissionChecker
-from bot_logic.WorkWith.MainWorkWith import CompareWorkWithAll, BaseWorkWith
-from bot_logic.utils.DataClassUtils import Message
+from bot_antifa.bot_logic.Permissions import PermissionChecker
+from bot_antifa.bot_logic.WorkWith.MainWorkWith import CompareWorkWithAll, BaseWorkWith
+from bot_antifa.bot_logic.utils.DataClassUtils import Message
 
 
 class BaseHandler(metaclass=ABCMeta):

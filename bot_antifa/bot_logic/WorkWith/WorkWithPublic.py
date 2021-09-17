@@ -1,8 +1,8 @@
 import random
 from random import choice
 
-from bot_logic.WorkWith.MainWorkWith import BaseWorkWith
-from bot_logic.utils.WorkWithUtils.WorkWithAuth import AuthTools
+from bot_antifa.bot_logic.WorkWith.MainWorkWith import BaseWorkWith
+from bot_antifa.bot_logic.utils.WorkWithUtils.WorkWithAuth import AuthTools
 
 
 class WallWorker(BaseWorkWith):

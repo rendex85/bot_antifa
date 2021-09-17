@@ -2,9 +2,9 @@ import threading
 
 from vk_api.bot_longpoll import VkBotEventType
 
-from bot_logic.Databases.UtilsDB import ConnectDB
-from bot_logic.EventHandler.HandlerKernel import BaseHandler
-from bot_logic.utils.WorkWithUtils.WorkWithAuth import AuthTools
+from bot_antifa.bot_logic.Databases.UtilsDB import ConnectDB
+from bot_antifa.bot_logic.EventHandler.HandlerKernel import BaseHandler
+from bot_antifa.bot_logic.utils.WorkWithUtils.WorkWithAuth import AuthTools
 
 
 class MainLoop:

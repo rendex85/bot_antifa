@@ -1,7 +1,7 @@
 from vk_api import vk_api
 from vk_api.bot_longpoll import VkBotLongPoll
 
-from bot_logic.consts import login_consts
+from bot_antifa.bot_logic.consts import login_consts
 
 
 class AuthTools():
