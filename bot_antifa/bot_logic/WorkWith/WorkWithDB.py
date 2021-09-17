@@ -1,9 +1,9 @@
 import random
 
-from ..Databases.Models import Trigger, Answer, TriggerAnswer, Permission
-from ..Permissions import PermissionChecker
+from Databases.Models import Trigger, Answer, TriggerAnswer, Permission
+from Permissions import PermissionChecker
 from .MainWorkWith import BaseWorkWith
-from ..utils.RegexUtils import compare_add_text, compare_add_media, compare_ban, compare_ban_command, \
+from utils.RegexUtils import compare_add_text, compare_add_media, compare_ban, compare_ban_command, \
     compare_unban_command, compare_unban, compare_remove_text
 
 

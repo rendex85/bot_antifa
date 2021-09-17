@@ -1,7 +1,7 @@
 from peewee import PostgresqlDatabase
 
 from .Models import BaseModel
-from ..consts.login_consts import db_host, db_port, db_password, db_user
+from consts.login_consts import db_host, db_port, db_password, db_user
 
 
 class ConnectDB:

@@ -1,10 +1,10 @@
 import random
 
 from .MainWorkWith import BaseWorkWith
-from ..consts import const_array
-from ..utils.WorkWithUtils.WorkWithAuth import AuthTools
-from ..utils.WorkWithUtils.WorkWithUpload import PhotoUpload
-from ..utils.WorkWithUtils.WorkWithUsers import UserAnalyze
+from consts import const_array
+from utils.WorkWithUtils.WorkWithAuth import AuthTools
+from utils.WorkWithUtils.WorkWithUpload import PhotoUpload
+from utils.WorkWithUtils.WorkWithUsers import UserAnalyze
 
 
 class GetPicture(BaseWorkWith):
