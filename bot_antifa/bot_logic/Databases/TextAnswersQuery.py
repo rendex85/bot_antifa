@@ -1,7 +1,7 @@
 from random import *
 
-from Databases.Models import *
-from WorkWith.WorkWithText import *
+from bot_antifa.Databases.Models import *
+from bot_antifa.WorkWith.WorkWithText import *
 
 
 class WorkWithText:

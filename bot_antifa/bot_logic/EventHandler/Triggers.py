@@ -1,8 +1,8 @@
 import random
 
-from bot_logic.EventHandler.HandlerKernel import BaseHandler
-from bot_logic.WorkWith.WorkWithDB import DataBaseTrigger
-from bot_logic.consts import const_array, const_txt
+from bot_antifa.bot_logic.EventHandler.HandlerKernel import BaseHandler
+from bot_antifa.bot_logic.WorkWith.WorkWithDB import DataBaseTrigger
+from bot_antifa.bot_logic.consts import const_array, const_txt
 
 
 class WhoHandler(BaseHandler):
