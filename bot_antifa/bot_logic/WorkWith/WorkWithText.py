@@ -1,16 +1,16 @@
 import random
 
 from bot_logic.Databases.Models import Trigger, Answer, TriggerAnswer
-from bot_logic.WorkWith.WorkWithStatic.WorkWithUsers import MembersConf
+from bot_logic.WorkWith.MainWorkWith import BaseWorkWith
 from bot_logic.consts import const_array
 from bot_logic.consts.login_consts import admin_id
 from bot_logic.utils.RegexUtils import compare_add_text, compare_add_media
+from bot_logic.utils.WorkWithUtils.WorkWithUsers import MembersConf
 
 
-class GetText:
+class GetText(BaseWorkWith):
     def __init__(self, obj, vk):
-        self.obj = obj
-        self.vk = vk
+        super().__init__(obj, vk)
 
     def answer_who(self):
         getmember = MembersConf(self.obj, self.vk)
