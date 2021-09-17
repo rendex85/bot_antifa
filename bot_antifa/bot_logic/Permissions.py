@@ -1,6 +1,6 @@
-from bot_antifa.bot_logic.Databases.Models import UserStuff, Permission
-from bot_antifa.bot_logic.consts.login_consts import admin_id
-from bot_antifa.bot_logic.utils.WorkWithUtils.WorkWithUsers import MembersConf
+from .Databases.Models import UserStuff, Permission
+from .consts.login_consts import admin_id
+from .utils.WorkWithUtils.WorkWithUsers import MembersConf
 
 
 class PermissionChecker:

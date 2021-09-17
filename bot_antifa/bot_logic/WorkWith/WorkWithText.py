@@ -1,11 +1,9 @@
 import random
 
-from bot_antifa.bot_logic.Databases.Models import Trigger, Answer, TriggerAnswer
-from bot_antifa.bot_logic.WorkWith.MainWorkWith import BaseWorkWith
-from bot_antifa.bot_logic.consts import const_array
-from bot_antifa.bot_logic.consts.login_consts import admin_id
-from bot_antifa.bot_logic.utils.RegexUtils import compare_add_text, compare_add_media
-from bot_antifa.bot_logic.utils.WorkWithUtils.WorkWithUsers import MembersConf
+
+from .MainWorkWith import BaseWorkWith
+from ..consts import const_array
+from ..utils.WorkWithUtils.WorkWithUsers import MembersConf
 
 
 class GetText(BaseWorkWith):
