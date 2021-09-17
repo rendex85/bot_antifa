@@ -1,11 +1,13 @@
 import random
 from random import choice
 
-from WorkWith.WorkWithAuth import AuthTools
+from bot_logic.WorkWith.MainWorkWith import BaseWorkWith
+from bot_logic.utils.WorkWithUtils.WorkWithAuth import AuthTools
 
 
-class WallWorker:
-    def __init__(self, peer_id="", msg="", vk="", public=""):
+class WallWorker(BaseWorkWith):
+    def __init__(self, obj, peer_id="", msg="", vk="", public=""):
+        super().__init__(obj, vk)
         self.vk = vk
         self.peer_id = peer_id
         self.msg = msg
