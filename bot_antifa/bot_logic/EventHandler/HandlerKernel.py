@@ -2,9 +2,9 @@ import random
 from abc import ABCMeta, abstractmethod
 from typing import List
 
-from ..Permissions import PermissionChecker
-from ..WorkWith.MainWorkWith import CompareWorkWithAll, BaseWorkWith
-from ..utils.DataClassUtils import Message
+from Permissions import PermissionChecker
+from WorkWith.MainWorkWith import CompareWorkWithAll, BaseWorkWith
+from utils.DataClassUtils import Message
 
 
 class BaseHandler(metaclass=ABCMeta):
