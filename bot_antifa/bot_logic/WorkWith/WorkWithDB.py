@@ -170,7 +170,7 @@ class PermissionsWorker(BaseWorkWith):
             try:
                 dict_of_parameters = self._params_str_to_dict(msg_text)
             except ValueError:
-                return "Ну и че ты натворил? Тди чини эту хуйню теперь"
+                return "Ну и че ты натворил? Иди чини эту хуйню теперь"
 
             Permission.create(user_vk_id=dict_of_parameters["user_id"],
                               conference_id=dict_of_parameters["conference_id"],

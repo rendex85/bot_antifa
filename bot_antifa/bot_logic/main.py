@@ -29,5 +29,9 @@ class MainLoop:
 
 
 if __name__ == '__main__':
-    main_loop = MainLoop()
-    main_loop.run()
+    while True:
+        try:
+            main_loop = MainLoop()
+            main_loop.run()
+        except Exception as e:
+            print(e)
