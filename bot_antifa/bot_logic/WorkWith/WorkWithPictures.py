@@ -1,10 +1,10 @@
 import random
 
-from .MainWorkWith import BaseWorkWith
 from consts import const_array
 from utils.WorkWithUtils.WorkWithAuth import AuthTools
 from utils.WorkWithUtils.WorkWithUpload import PhotoUpload
 from utils.WorkWithUtils.WorkWithUsers import UserAnalyze
+from .MainWorkWith import BaseWorkWith
 
 
 class GetPicture(BaseWorkWith):
@@ -28,6 +28,10 @@ class GetPicture(BaseWorkWith):
     def casper_cat(self):
         casper_attach = self.get_img_from_private_album("299186552", "276063968", "photo299186552", 1)
         return casper_attach
+
+    def vasily_cat(self):
+        vasily_attach = self.get_img_from_private_album("299186552", "280961377", "photo299186552", 1)
+        return vasily_attach
 
     def gar(self):
         random_num = random.choice([0, 1])
