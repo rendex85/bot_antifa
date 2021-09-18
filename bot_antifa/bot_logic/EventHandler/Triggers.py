@@ -110,7 +110,7 @@ class SaberHandler(BaseHandler):
 
 
 class WhatHandler(BaseHandler):
-    trigger_strict = ["чо", "че", "чё "]
+    trigger_strict = ["чо", "че", "чё"]
 
     def preHandler(self):
         self.message_data.sticker = 3380
@@ -170,3 +170,5 @@ class VasilyCat(BaseHandler):
 
     def preHandler(self):
         self.message_data.attachment = self.working_methods.vasily_cat()
+
+
