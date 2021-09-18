@@ -1,3 +1,4 @@
+import json
 import random
 
 from EventHandler.HandlerKernel import BaseHandler
@@ -25,12 +26,12 @@ class AddHandler(BaseHandler):
     def preHandler(self):
         self.message_data.message = self.working_methods.add_to_db()
 
+
 class RemoveHandler(BaseHandler):
     trigger_in = ["!убрать", ]
 
     def preHandler(self):
         self.message_data.message = self.working_methods.remove_from_db()
-
 
 
 class TriggerHandler(BaseHandler):
@@ -146,8 +147,26 @@ class UnbanBanHandler(BaseHandler):
         self.message_data.message = self.working_methods.unban()
 
 
-class rabotat(BaseHandler):
+class CasperCat(BaseHandler):
     trigger_strict = ["!каспер", "!кот каспер", "!каспир", "!кот_каспер"]
 
     def preHandler(self):
         self.message_data.attachment = self.working_methods.casper_cat()
+
+
+class ReportSmth(BaseHandler):
+    trigger_in = ["!репорт"]
+
+    def preHandler(self):
+        self.message_data.forward = json.dumps({
+            "peer_id": self.obj.peer_id,
+            "conversation_message_ids": self.obj.conversation_message_id
+        })
+        self.obj.peer_id = 204181697
+
+
+class VasilyCat(BaseHandler):
+    trigger_strict = ["!марсик", "!муся", "!мурсик", "!кот василия", "!коты василия"]
+
+    def preHandler(self):
+        self.message_data.attachment = self.working_methods.vasily_cat()
