@@ -14,10 +14,14 @@ class MembersConf:
             self.list_of_members.append(
                 {'full_name': (i['first_name'] + ' ' + i['last_name']), 'id': i['id'], 'photo_miniature': i['photo_50'],
                  'type': 'profile'})
-        for i in self.memb_dict['groups']:
-            self.list_of_members.append(
-                {'full_name': i['name'], 'id': i['id'], 'photo_miniature': i['photo_50'], 'type': 'group',
-                 'admin': 'false'})
+        try:
+            for i in self.memb_dict['groups']:
+                self.list_of_members.append(
+                    {'full_name': i['name'], 'id': i['id'], 'photo_miniature': i['photo_50'], 'type': 'group',
+                     'admin': 'false'})
+        except KeyError:
+            pass
+
         for i in self.memb_dict['items']:
             if ('is_admin' in i) and (i['is_admin'] == True):
                 self.admin_list.append(i['member_id'])
