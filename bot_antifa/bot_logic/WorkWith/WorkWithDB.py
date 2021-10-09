@@ -98,7 +98,29 @@ class DataBaseTrigger(BaseWorkWith):
         else:
             return "Вы сделали какую-то тупую хуйню и все сломалось"
 
-    def get_list_of_triggers(self) -> [int, int]:
+    def get_list_of_triggers(self):
+        list_of_params = self.obj.text.split(" ")
+        if len(list_of_params) in [1, 2] and list_of_params[0] == "!триггеры":
+            if len(list_of_params) == 1:
+                trigger_filter = int(self.obj.peer_id)
+            elif list_of_params[1] in ["конфы", "конференции"]:
+                trigger_filter = int(self.obj.peer_id)
+            elif list_of_params[1] in ["глобальные", "общие"]:
+                trigger_filter = None
+            else:
+                return "Вообще не то написал, чел. Полная хуйня"
+            trigger_set = Trigger.filter(conference_id=trigger_filter).execute()
+            if not trigger_set:
+                return "а тутачки ничего нет)))"
+            response_text = ""
+            for trigger in trigger_set:
+                response_text += f"Триггер: {trigger.trigger_text} | set_chance={trigger.trigger_chance} strict={trigger.trigger_type}\n"
+            return response_text
+        else:
+            raise KeyError
+
+
+    def get_trigger(self) -> [int, int, str]:
         trigger_set_in_conference = Trigger.filter(conference_id=int(self.obj.peer_id)).execute()
         trigger_set_global = Trigger.filter(conference_id=None).execute()
         for trigger in trigger_set_in_conference:

@@ -39,7 +39,7 @@ class TriggerHandler(BaseHandler):
 
     # Если честно - говнокод
     def preHandler(self):
-        trigger_id, chance, command = self.working_methods.get_list_of_triggers()
+        trigger_id, chance, command = self.working_methods.get_trigger()
         if trigger_id and random.randint(0, chance) == 0:
             self.command = command
             return_dict = DataBaseTrigger.get_answer_from_db(trigger_id)
@@ -48,11 +48,31 @@ class TriggerHandler(BaseHandler):
             self.do_post = False
 
 
+class TriggersList(BaseHandler):
+    trigger_in = ["!триггеры", ]
+
+    def preHandler(self):
+        try:
+            self.message_data.message = self.working_methods.get_list_of_triggers()
+        except KeyError:
+            self.do_post=False
+
+
 class PicHandler(BaseHandler):
     trigger_strict = ["!пик", "!пикча", "!gbr", "!gbrxf", ]
 
     def preHandler(self):
         self.message_data.attachment = self.working_methods.pic()
+
+
+class PicManyHandler(BaseHandler):
+    trigger_in = ["!пик", "!пикча", "!gbr", "!gbrxf", ]
+
+    def preHandler(self):
+        try:
+            self.message_data.attachment = self.working_methods.many_pics()
+        except KeyError or ValueError:
+            self.do_post = False
 
 
 class ChushHandler(BaseHandler):
@@ -125,8 +145,8 @@ class CatAHandler(BaseHandler):
 
 
 class CerfAHandler(BaseHandler):
-    trigger_strict = ["сука", "cerf"]
-    random_right = 10
+    trigger_strict = ["сука", "cerf", "мкеп"]
+    random_right = 5
 
     def preHandler(self):
         self.message_data.attachment = const_array.cerf_list
@@ -170,5 +190,3 @@ class VasilyCat(BaseHandler):
 
     def preHandler(self):
         self.message_data.attachment = self.working_methods.vasily_cat()
-
-
