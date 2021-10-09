@@ -9,9 +9,13 @@ from utils.WorkWithUtils.WorkWithAuth import AuthTools
 
 class MainLoop:
     TURN_ON = True
+    DICT_OF_GLOBAL_VARIABLES = \
+        {
+            "chess_objects_list": []
+        }
 
-    def initiate_trigger(self, trigger, vk, obj):
-        trigger(vk, obj)
+    def initiate_trigger(self, trigger, vk, obj, global_list):
+        trigger(vk, obj, global_list)
 
     def run(self):
         vk, longpoll, vk_session = AuthTools.authByGroup()
@@ -22,10 +26,11 @@ class MainLoop:
             threads = []
             if event.type == VkBotEventType.MESSAGE_NEW and self.TURN_ON:
                 for el in BaseHandler.__subclasses__():
-                    new_thread = threading.Thread(target=self.initiate_trigger, args=(el, vk, event.obj))
+                    new_thread = threading.Thread(target=self.initiate_trigger,
+                                                  args=(el, vk, event.obj, self.DICT_OF_GLOBAL_VARIABLES))
                     threads.append(new_thread)
                     new_thread.start()
-                    #new_thread.join()
+                    # new_thread.join()
 
 
 if __name__ == '__main__':

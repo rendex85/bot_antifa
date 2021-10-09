@@ -1,4 +1,6 @@
 import random
+import threading
+import time
 
 from consts import const_array
 from utils.WorkWithUtils.WorkWithAuth import AuthTools
@@ -40,6 +42,27 @@ class GetPicture(BaseWorkWith):
                                  'photo' + const_array.account_garik_list[random_num], 1)
         attach = PhotoUpload.load_img(AuthTools.authByGroup()[2], photo_url)
         return attach
+
+    def many_pics(self):
+        split_data_message = self.obj.text.split(" ")
+        if (split_data_message[0] in ["!пик", "!пикча", "!gbr", "!gbrxf", ]) and (
+                int(split_data_message[1]) in range(1, 11)) and len(split_data_message) == 2:
+            attach_string = ""
+            vk1 = AuthTools.authByUser()
+            pic_lenght = \
+                dict(vk1.photos.get(owner_id='-84187544', album_id="wall", offset=1, count='1', photo_sizes=0))['count']
+
+            dict_of_img = dict(
+                vk1.photos.get(owner_id='-84187544', album_id="wall", offset=random.randint(0, pic_lenght - 1000),
+                               count='1000'))
+
+            for _ in range(0, int(split_data_message[1])):
+                pic_object = random.choice(dict_of_img['items'])
+                attach_string += "photo-84187544_" + str(pic_object["id"]) + ","
+            return attach_string
+        else:
+            raise KeyError
+
 
     def get_img_from_private_album(self, owner, album, photo_obj_start, type_photo):
         photo_url = self.get_img(owner=owner, album=album, photo_obj_start=photo_obj_start, type=type_photo)

@@ -15,7 +15,7 @@ class BaseHandler(metaclass=ABCMeta):
     random_right: int = 0
     separate_random_triggers: bool = False  # бля че это)))
 
-    def __init__(self, vk, obj):
+    def __init__(self, vk, obj, dict_of_globals):
         self.vk = vk
         self.obj = obj
         self.message_data = Message()
@@ -23,6 +23,7 @@ class BaseHandler(metaclass=ABCMeta):
         self.command = None
         self.working_methods = CompareWorkWithAll(self.obj, self.vk)
         self.permissions = PermissionChecker(self.obj, self.vk)
+        self.dict_of_globals = dict_of_globals
         self.initiator()
 
     def initiator(self):
@@ -34,14 +35,14 @@ class BaseHandler(metaclass=ABCMeta):
             if self.obj.text.lower() == el:
                 return True
 
-        if self.random_right > 0:
+        if self.random_right > 0 and not self.separate_random_triggers:
             if random.randint(0, self.random_right) == 0:
                 if self.separate_random_triggers:
                     self.preHandler()
                     self.post()
-                    return True
             else:
                 return True
+
         if not (self.trigger_in or self.trigger_strict):
             self.preHandler()
             self.post()
