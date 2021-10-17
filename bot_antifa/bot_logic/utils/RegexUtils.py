@@ -11,8 +11,8 @@ def compare_remove_text(add_string: str) -> bool:
     return bool(re.match(regex_string, add_string))
 
 
-def compare_add_media(add_string: str) -> bool:
-    regex_string = r'^!добавить .{1,4096}[|]media_key'
+def compare_add_simple(add_string: str) -> bool:
+    regex_string = r'^!добавить .{1,4096}'
     return bool(re.match(regex_string, add_string))
 
 

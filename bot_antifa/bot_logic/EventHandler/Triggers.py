@@ -44,6 +44,7 @@ class TriggerHandler(BaseHandler):
             self.command = command
             return_dict = DataBaseTrigger.get_answer_from_db(trigger_id)
             self.message_data.message = return_dict["text"]
+            self.message_data.attachment = return_dict["picture"]
         else:
             self.do_post = False
 
@@ -55,23 +56,16 @@ class TriggersList(BaseHandler):
         try:
             self.message_data.message = self.working_methods.get_list_of_triggers()
         except KeyError:
-            self.do_post=False
+            self.do_post = False
 
 
 class PicHandler(BaseHandler):
-    trigger_strict = ["!пик", "!пикча", "!gbr", "!gbrxf", ]
-
-    def preHandler(self):
-        self.message_data.attachment = self.working_methods.pic()
-
-
-class PicManyHandler(BaseHandler):
     trigger_in = ["!пик", "!пикча", "!gbr", "!gbrxf", ]
 
     def preHandler(self):
         try:
-            self.message_data.attachment = self.working_methods.many_pics()
-        except KeyError or ValueError:
+            self.message_data.attachment = self.working_methods.pic()
+        except KeyError or ValueError or IndexError:
             self.do_post = False
 
 

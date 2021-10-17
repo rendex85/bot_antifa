@@ -2,6 +2,9 @@ import os
 
 from dotenv import load_dotenv
 
+"""
+В этой же папке должен лежать .env файл с описанными ниже полями
+"""
 BASEDIR = os.path.abspath(os.path.dirname(__file__))
 load_dotenv(os.path.join(BASEDIR, '.env'))
 
@@ -11,7 +14,6 @@ public = os.getenv("PUBLIC_ID")
 phone = os.getenv("LOGIN_VK")
 password = os.getenv("PASSWORD_VK")
 admin_id = os.getenv("ADMIN")
-
 
 # Для базы данных
 db_host = os.getenv("DB_HOST")

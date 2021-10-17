@@ -1,5 +1,7 @@
 import random
 
+from vk_api.vk_api import VkApiMethod
+
 
 class MembersConf:
     # Легаси код, не хочу в этом кале разбираться
@@ -35,5 +37,12 @@ class MembersConf:
 
 class UserAnalyze:
     @staticmethod
-    def getuser(vk, from_id, params):
+    def getuser(vk: VkApiMethod, from_id: str, params: str):
+        """
+        vk.users.get()
+        :param vk: Объект vk для методов
+        :param from_id: id пользователя чьи данные получаем
+        :param params: дополнительные данные для vk.users.get()
+        :return: dict with user info
+        """
         return vk.users.get(user_ids=from_id, fields=params)

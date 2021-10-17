@@ -4,6 +4,9 @@ from typing import Any
 
 @dataclass
 class Message:
+    """
+    Объект параметров для отправки сообщения в вк
+    """
     # TODO: Разобраться с типизацией элементов (строка или инты)
     message: str = None
     attachment: Any = None

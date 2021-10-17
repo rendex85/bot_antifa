@@ -8,31 +8,54 @@ from utils.WorkWithUtils.WorkWithAuth import AuthTools
 
 
 class MainLoop:
-    TURN_ON = True
+    """
+    Не должно было быть классом, так сложились обстоятельства.
+    Это входная точка в бота.
+    """
+
+    # Словарь с объектами для оперативной памяти бота
     DICT_OF_GLOBAL_VARIABLES = \
         {
             "chess_objects_list": []
         }
 
     def initiate_trigger(self, trigger, vk, obj, global_list):
+        """
+        Инициализация отдельного класа тригерра из списка по ссылке
+        """
         trigger(vk, obj, global_list)
 
     def run(self):
+        """
+        Главная функция-обработчик бота
+        """
+        # Авторизируемся в вк
         vk, longpoll, vk_session = AuthTools.authByGroup()
+
+        # Получаем коннект к базе данных и создаем таблицы
         database = ConnectDB.get_connection()
         ConnectDB.create_tables(database)
         database.close()
+
+        # Слушаем лонгпулл
         for event in longpoll.listen():
             threads = []
-            if event.type == VkBotEventType.MESSAGE_NEW and self.TURN_ON:
-                for el in BaseHandler.__subclasses__():
+
+            if event.type == VkBotEventType.MESSAGE_NEW:
+                """
+                Проходимся по всем наследникам бейсхенделра и получаем ссылки на все классы-наследники
+                Все классы триггеров хранятся в пакете EventHandler
+                """
+                for trigger_class in BaseHandler.__subclasses__():
+                    # Новый тред для отедльного класса
                     new_thread = threading.Thread(target=self.initiate_trigger,
-                                                  args=(el, vk, event.obj, self.DICT_OF_GLOBAL_VARIABLES))
+                                                  args=(trigger_class, vk, event.obj, self.DICT_OF_GLOBAL_VARIABLES))
                     threads.append(new_thread)
                     new_thread.start()
                     # new_thread.join()
 
 
+# TODO: Сделай уже нормальное логирование, дэбил
 if __name__ == '__main__':
     while True:
         try:
