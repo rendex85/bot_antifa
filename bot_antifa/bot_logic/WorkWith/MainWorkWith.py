@@ -1,3 +1,4 @@
+
 """
 Возможно, этот код омерзителен, но я лучше не придумал
 """
@@ -10,9 +11,6 @@ class BaseWorkWith:
 
     def __init__(self, obj, vk, dict_of_globals=None):
         self.dict_of_globals = dict_of_globals
-        self.vk = vk
-        self.obj = obj
-
 
 from .WorkWithDB import DataBaseTrigger, PermissionsWorker
 from .WorkWithPictures import GetPicture

@@ -1,4 +1,6 @@
+
 import inspect
+
 import random
 import threading
 import time
@@ -86,7 +88,6 @@ class GetPicture(BaseWorkWith):
         choose_alb = random.choice(const_array.photo_garik_list[random_num])
         photo_url = self.get_img(owner=const_array.account_garik_list[random_num], album=choose_alb, get_from="user")
         return photo_url
-
     """
     ты ушел брат ты ушел так рано
     

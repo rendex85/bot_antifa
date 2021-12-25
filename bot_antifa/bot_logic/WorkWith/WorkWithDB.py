@@ -40,6 +40,7 @@ class DataBaseTrigger(BaseWorkWith):
             list_of_sub_params = params_list[2].split(" ")
         except IndexError:
             return return_dict
+          
         # Если настройки есть, то собираем их всех
         for param in list_of_sub_params:
             # Формат настройки: наименование_условия=значение
@@ -156,13 +157,16 @@ class DataBaseTrigger(BaseWorkWith):
                 return "Вы дегенерат"
             except IndexError:
                 return "Всем хрю, с вами мегахрю (что-то было сделано НЕ ТАК)"
+
             # Ищем такое условие, если не находим, обзываем пользователя
+
             find_trigger = Trigger.get_or_none(Trigger.trigger_text == dict_of_parameters["trigger"],
                                                Trigger.conference_id == dict_of_parameters["set_global"],
                                                Trigger.trigger_type == dict_of_parameters["strict"],
                                                Trigger.trigger_chance == dict_of_parameters["set_chance"])
             if not find_trigger:
                 return "Ну и рыготина, пиши нормально"
+
 
             # Костыль номер два, не хочу писать sql-запрос на массовое удаление многих ко многим
             trigger_to_answers = TriggerAnswer.select().where(TriggerAnswer.trigger_link == find_trigger.trigger_id)
@@ -211,6 +215,7 @@ class DataBaseTrigger(BaseWorkWith):
             if (trigger.trigger_type == 0 and trigger.trigger_text == self.obj.text) or \
                     (trigger.trigger_type == 1 and self.obj.text.lower().find(trigger.trigger_text) != -1):
                 return trigger.trigger_id, trigger.trigger_chance, trigger.trigger_text
+
         # Если ничего не нашли, лезем в глобальные
         for trigger in trigger_set_global:
             if (trigger.trigger_type == 0 and trigger.trigger_text == self.obj.text) or \
@@ -313,6 +318,7 @@ class PermissionsWorker(BaseWorkWith):
                               command_name=dict_of_parameters["command_to_ban"])
             return "Бан!"
         else:
+
             # Не одобряекм
             return "Nigger"
 
@@ -321,6 +327,7 @@ class PermissionsWorker(BaseWorkWith):
         Разбаниваем юзера/команду
         :return: сообщение об ошибке или сообщение об успешном разбане
         """
+
         msg_text = str(self.obj.text)
         if (compare_unban(msg_text) or compare_unban_command(msg_text)) and (
                 self.permission.is_user_admin() or self.permission.is_user_admin_in_conference()):

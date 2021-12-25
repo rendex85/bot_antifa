@@ -3,6 +3,7 @@ import random
 from vk_api.vk_api import VkApiMethod
 
 
+
 class MembersConf:
     # Легаси код, не хочу в этом кале разбираться
     def __init__(self, obj, vk):

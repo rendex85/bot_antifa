@@ -77,6 +77,7 @@ class BaseHandler(metaclass=ABCMeta):
         """
         pass
 
+    
     def post(self) -> None:
         """
         Отправка сообщения в диалог

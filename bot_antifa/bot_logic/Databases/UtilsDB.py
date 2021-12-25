@@ -1,5 +1,4 @@
 from peewee import PostgresqlDatabase
-
 from consts import login_consts
 from .Models import BaseModel
 

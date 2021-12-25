@@ -154,7 +154,7 @@ class CerfAHandler(BaseHandler):
 
 
 class BanHandler(BaseHandler):
-    do_threading = True
+    do_threading = Truer
     trigger_in = ["!бан"]
     trigger_not_in = ["!разбан"]
 
@@ -197,8 +197,7 @@ class VasilyCat(BaseHandler):
 
     def preHandler(self):
         self.message_data.attachment = self.working_methods.vasily_cat()
-
-
+        
 class test_cache(BaseHandler):
     do_threading = True
     trigger_strict = ["!cac"]
