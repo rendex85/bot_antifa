@@ -21,6 +21,7 @@ class InfHandler(BaseHandler):
 
 
 class AddHandler(BaseHandler):
+    do_threading = True
     trigger_in = ["!добавить", ]
 
     def preHandler(self):
@@ -28,6 +29,7 @@ class AddHandler(BaseHandler):
 
 
 class RemoveHandler(BaseHandler):
+    do_threading = True
     trigger_in = ["!убрать", ]
 
     def preHandler(self):
@@ -35,6 +37,7 @@ class RemoveHandler(BaseHandler):
 
 
 class TriggerHandler(BaseHandler):
+    do_threading = True
     trigger_in = [""]
 
     # Если честно - говнокод
@@ -44,38 +47,34 @@ class TriggerHandler(BaseHandler):
             self.command = command
             return_dict = DataBaseTrigger.get_answer_from_db(trigger_id)
             self.message_data.message = return_dict["text"]
+            self.message_data.attachment = return_dict["picture"]
         else:
             self.do_post = False
 
 
 class TriggersList(BaseHandler):
+    do_threading = True
     trigger_in = ["!триггеры", ]
 
     def preHandler(self):
         try:
             self.message_data.message = self.working_methods.get_list_of_triggers()
         except KeyError:
-            self.do_post=False
+            self.do_post = False
 
 
 class PicHandler(BaseHandler):
-    trigger_strict = ["!пик", "!пикча", "!gbr", "!gbrxf", ]
-
-    def preHandler(self):
-        self.message_data.attachment = self.working_methods.pic()
-
-
-class PicManyHandler(BaseHandler):
     trigger_in = ["!пик", "!пикча", "!gbr", "!gbrxf", ]
 
     def preHandler(self):
         try:
-            self.message_data.attachment = self.working_methods.many_pics()
-        except KeyError or ValueError:
+            self.message_data.attachment = self.working_methods.pic()
+        except KeyError or ValueError or IndexError:
             self.do_post = False
 
 
 class ChushHandler(BaseHandler):
+    do_threading = True
     trigger_strict = ["чуш", ]
     random_right = 200
     separate_random_triggers = True
@@ -85,6 +84,7 @@ class ChushHandler(BaseHandler):
 
 
 class CatHandler(BaseHandler):
+    do_threading = True
     trigger_strict = ["!кот", "!rjn"]
 
     def preHandler(self):
@@ -92,6 +92,7 @@ class CatHandler(BaseHandler):
 
 
 class GarikHandler(BaseHandler):
+    do_threading = True
     trigger_strict = ["!непик", ]
 
     def preHandler(self):
@@ -153,6 +154,7 @@ class CerfAHandler(BaseHandler):
 
 
 class BanHandler(BaseHandler):
+    do_threading = Truer
     trigger_in = ["!бан"]
     trigger_not_in = ["!разбан"]
 
@@ -161,6 +163,7 @@ class BanHandler(BaseHandler):
 
 
 class UnbanBanHandler(BaseHandler):
+    do_threading = True
     trigger_in = ["!разбан"]
 
     def preHandler(self):
@@ -168,6 +171,8 @@ class UnbanBanHandler(BaseHandler):
 
 
 class CasperCat(BaseHandler):
+    # TODO: Сделать кэш
+    do_threading = True
     trigger_strict = ["!каспер", "!кот каспер", "!каспир", "!кот_каспер"]
 
     def preHandler(self):
@@ -175,6 +180,7 @@ class CasperCat(BaseHandler):
 
 
 class ReportSmth(BaseHandler):
+    do_threading = True
     trigger_in = ["!репорт"]
 
     def preHandler(self):
@@ -186,7 +192,15 @@ class ReportSmth(BaseHandler):
 
 
 class VasilyCat(BaseHandler):
+    do_threading = True
     trigger_strict = ["!марсик", "!муся", "!мурсик", "!кот василия", "!коты василия"]
 
     def preHandler(self):
         self.message_data.attachment = self.working_methods.vasily_cat()
+        
+class test_cache(BaseHandler):
+    do_threading = True
+    trigger_strict = ["!cac"]
+
+    def preHandler(self):
+        self.message_data.attachment = self.working_methods.cash_checker()

@@ -1,11 +1,16 @@
 
+"""
+Возможно, этот код омерзителен, но я лучше не придумал
+"""
 
 
 class BaseWorkWith:
-    def __init__(self, obj, vk):
-        self.vk = vk
-        self.obj = obj
+    """
+    Базовый класс для функциональной части бота
+    """
 
+    def __init__(self, obj, vk, dict_of_globals=None):
+        self.dict_of_globals = dict_of_globals
 
 from .WorkWithDB import DataBaseTrigger, PermissionsWorker
 from .WorkWithPictures import GetPicture
@@ -13,5 +18,9 @@ from .WorkWithText import GetText
 
 
 class CompareWorkWithAll(GetPicture, GetText, DataBaseTrigger, PermissionsWorker):
-    def __init__(self, obj, vk):
-        super().__init__(obj, vk)
+    """
+    Объединяем весь функционал бота для доступа через единый интерфейс
+    """
+
+    def __init__(self, obj, vk, dict_of_globals):
+        super().__init__(obj, vk, dict_of_globals)
