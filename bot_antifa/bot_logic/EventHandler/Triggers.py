@@ -154,7 +154,7 @@ class CerfAHandler(BaseHandler):
 
 
 class BanHandler(BaseHandler):
-    do_threading = Truer
+    do_threading = True
     trigger_in = ["!бан"]
     trigger_not_in = ["!разбан"]
 
