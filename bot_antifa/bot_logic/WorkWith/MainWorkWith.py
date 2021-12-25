@@ -7,7 +7,9 @@ class BaseWorkWith:
     """
     Базовый класс для функциональной части бота
     """
-    def __init__(self, obj, vk):
+
+    def __init__(self, obj, vk, dict_of_globals=None):
+        self.dict_of_globals = dict_of_globals
         self.vk = vk
         self.obj = obj
 
@@ -17,9 +19,10 @@ from .WorkWithPictures import GetPicture
 from .WorkWithText import GetText
 
 
-class CompareWorkWithAll(GetPicture, GetText, DataBaseTrigger):
+class CompareWorkWithAll(GetPicture, GetText, DataBaseTrigger, PermissionsWorker):
     """
     Объединяем весь функционал бота для доступа через единый интерфейс
     """
-    def __init__(self, obj, vk):
-        super().__init__(obj, vk)
+
+    def __init__(self, obj, vk, dict_of_globals):
+        super().__init__(obj, vk, dict_of_globals)

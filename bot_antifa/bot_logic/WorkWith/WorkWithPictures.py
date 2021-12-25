@@ -1,3 +1,4 @@
+import inspect
 import random
 import threading
 import time
@@ -6,6 +7,7 @@ from consts import const_array
 from utils.WorkWithUtils.WorkWithAuth import AuthTools
 from utils.WorkWithUtils.WorkWithUpload import PhotoUpload
 from utils.WorkWithUtils.WorkWithUsers import UserAnalyze
+from utils.WorkWithUtils.cache_utils import cache_finder_photo, cache_append
 from .MainWorkWith import BaseWorkWith
 
 
@@ -62,7 +64,17 @@ class GetPicture(BaseWorkWith):
         коты василия шуйского
         :return: vk photo id with prefix
         """
-        vasily_attach = self.get_img(owner="299186552", album="280961377", get_from="user")
+        vasily_attach = self.get_img(owner="299186552", album="280961377", get_from="user",
+                                     caller_name=inspect.currentframe().f_code.co_name)
+        return vasily_attach
+
+    def cash_checker(self) -> str:
+        """
+        коты василия шуйского
+        :return: vk photo id with prefix
+        """
+        vasily_attach = self.get_img(owner="204181697", album="274033486", get_from="user",
+                                     caller_name=inspect.currentframe().f_code.co_name)
         return vasily_attach
 
     def gar(self) -> str:
@@ -90,9 +102,10 @@ class GetPicture(BaseWorkWith):
         """
 
     def get_img(self, owner: str, album: str, get_from: str = "public", count_of_pics: int = 1,
-                pic_length_delta: int = 1) -> str:
+                pic_length_delta: int = 1, caller_name=None) -> str:
         """
         Основная функция, отвественная за достование картинок откуда либо
+        :param caller_name: Имя функции, вызвавшей get_img. Нужно для кэширования
         :param owner: сурс страницы/паблика откуда берутся картинки
         :param album: альбом картинок
         :param get_from: явное указание откуда мы берем картинки (public, user)
@@ -119,7 +132,16 @@ class GetPicture(BaseWorkWith):
             for _ in range(0, count_of_pics):
                 pic_object = random.choice(dict_of_img['items'])
                 pic_string += f"photo{owner}_" + str(pic_object["id"]) + ","
+
         elif get_from == "user":
             url_pic = dict_of_img['items'][0]['sizes'][-1]['url']
-            pic_string = PhotoUpload.load_img(AuthTools.authByGroup()[2], url_pic)
+            # Если мы передаем информацию для кеширования
+            if caller_name:
+                pic_string = cache_finder_photo(cache_dict=self.dict_of_globals, url=url_pic, type_name=caller_name)
+                if not pic_string:
+                    pic_string = PhotoUpload.load_img(AuthTools.authByGroup()[2], url_pic)
+                    cache_append(cache_dict=self.dict_of_globals, url=url_pic, type_name=caller_name, value=pic_string)
+
+            else:
+                pic_string = PhotoUpload.load_img(AuthTools.authByGroup()[2], url_pic)
         return pic_string

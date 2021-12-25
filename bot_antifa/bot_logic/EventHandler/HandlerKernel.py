@@ -12,6 +12,8 @@ class BaseHandler(metaclass=ABCMeta):
     Обработчик комманд для бота.
     Предназачен для наследования и реализации различного функционала для респоносов робота
     """
+    do_threading = False  # пока ни за что не отвечает, когда-нибудь придумаю что с этим можно придумать
+
     trigger_in: List[str] = []  # Если есть вхождение строки из списка, запускает обработку команды
     trigger_strict: List[str] = []  # Если есть строка из списка соотвествует тексту, запускает обработку команды
     trigger_not_strict: List[str] = []  # Пропускает обработку если строка из списка соотвествует сообщению
@@ -25,9 +27,10 @@ class BaseHandler(metaclass=ABCMeta):
         self.message_data = Message()  # Все что можно передать в метод vk.messages.send()
         self.do_post: bool = True  # Если нужно пропустить вызов метода self.post
         self.command = None  # Стриггереная команда
-        self.working_methods = CompareWorkWithAll(self.obj, self.vk)  # Объединяем все классы из WorkWith
         self.permissions = PermissionChecker(self.obj, self.vk)  # Права доступа
         self.dict_of_globals = dict_of_globals  # Оперативная память бота
+        self.working_methods = CompareWorkWithAll(self.obj, self.vk,
+                                                  self.dict_of_globals)  # Объединяем все классы из WorkWith
         self._initiator()  # Вызов функции првоерки условий
 
     def _initiate_post_message(self) -> None:

@@ -36,10 +36,9 @@ class MainLoop:
         database = ConnectDB.get_connection()
         ConnectDB.create_tables(database)
         database.close()
-
+        threads = []
         # Слушаем лонгпулл
         for event in longpoll.listen():
-            threads = []
 
             if event.type == VkBotEventType.MESSAGE_NEW:
                 """
@@ -49,9 +48,13 @@ class MainLoop:
                 for trigger_class in BaseHandler.__subclasses__():
                     # Новый тред для отедльного класса
                     new_thread = threading.Thread(target=self.initiate_trigger,
-                                                  args=(trigger_class, vk, event.obj, self.DICT_OF_GLOBAL_VARIABLES))
+                                                  args=(
+                                                      trigger_class, vk, event.obj, self.DICT_OF_GLOBAL_VARIABLES))
                     threads.append(new_thread)
                     new_thread.start()
+                    if len(threads) > 2000:
+                        [thread.join() for thread in threads]
+                        threads = []
                     # new_thread.join()
 
 

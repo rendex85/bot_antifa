@@ -15,11 +15,11 @@ class DataBaseTrigger(BaseWorkWith):
     Класс с реализацией функций, адрессующихся к БД
     """
 
-    def __init__(self, obj, vk):
-        super().__init__(obj, vk)
+    def __init__(self, obj, vk, dict_of_globals):
+        super().__init__(obj, vk, dict_of_globals)
         self.permission = PermissionChecker(obj, vk)
 
-    def _params_list_to_dict(self, params_list) -> dict:
+    def _params_list_to_dict(self, params_list: list) -> dict:
         """
         Превращает список параметров в словарь для последующего добавления в БД
         :param params_list: список параметров из сообщения.
@@ -137,34 +137,41 @@ class DataBaseTrigger(BaseWorkWith):
             return "Ты хрюня)"
 
     def remove_from_db(self):
+        """
+        Удаление триггера с ответами из БД
+        :return: Сообщение о удалении/ошибке удаления
+        """
         msg_text = str(self.obj.text)
+        # Регулярочкой проверяем соответсвует ли сообщение формату
         if compare_remove_text(msg_text):
             try:
                 msg_splitted = msg_text[8:].split("|")
+                # Надо переделать под аргс/кваргс но я пока истекаю идиотизмом.
                 base_list = [msg_splitted[0], "самый идиотский котсыль в мире"]
                 base_list.extend(msg_splitted[1:])
+                # Передаем список с костылем в преобразователь параметров
                 dict_of_parameters = self._params_list_to_dict(base_list)
                 # print(dict_of_parameters)
             except ValueError:
                 return "Вы дегенерат"
             except IndexError:
                 return "Всем хрю, с вами мегахрю (что-то было сделано НЕ ТАК)"
-            # result = ResultOfTrigger.objects.create(type_media=1, result_of_trigger=list_of_parameters[1])
+            # Ищем такое условие, если не находим, обзываем пользователя
             find_trigger = Trigger.get_or_none(Trigger.trigger_text == dict_of_parameters["trigger"],
                                                Trigger.conference_id == dict_of_parameters["set_global"],
                                                Trigger.trigger_type == dict_of_parameters["strict"],
                                                Trigger.trigger_chance == dict_of_parameters["set_chance"])
             if not find_trigger:
                 return "Ну и рыготина, пиши нормально"
-            trigger_to_answers = TriggerAnswer.select().where(TriggerAnswer.trigger_link == find_trigger.trigger_id)
 
+            # Костыль номер два, не хочу писать sql-запрос на массовое удаление многих ко многим
+            trigger_to_answers = TriggerAnswer.select().where(TriggerAnswer.trigger_link == find_trigger.trigger_id)
             for i_hate_fucking_peewee in trigger_to_answers:
-                # print(i_hate_fucking_peewee.answer_link, Answer.answer_id)
                 Answer.delete().where(Answer.answer_id == i_hate_fucking_peewee.answer_link).execute()
             find_trigger.delete_instance()
             return f"Условие {dict_of_parameters['trigger']} успешно удалено!"
         else:
-            return "Вы сделали какую-то тупую хуйню и все сломалось"
+            return "Вы сделали какой-то тупой кал и все сломалось"
 
     def get_list_of_triggers(self) -> str:
         """
@@ -180,7 +187,7 @@ class DataBaseTrigger(BaseWorkWith):
             elif list_of_params[1] in ["глобальные", "общие"]:
                 trigger_filter = None
             else:
-                return "Вообще не то написал, чел. Полная хуйня"
+                return "Вообще не то написал, чел. Полное говно"
             trigger_set = Trigger.filter(conference_id=trigger_filter).execute()
             if not trigger_set:
                 return "а тутачки ничего нет)))"
@@ -193,13 +200,18 @@ class DataBaseTrigger(BaseWorkWith):
             raise KeyError
 
     def get_trigger(self) -> (int, int, str):
-
+        """
+        Может ли наше сообщение триггернуть какой-то ответ?
+        :return:  в идеале возвращает id триггера, шанс и текст, но может и нагадить, если ничего не найдет
+        """
         trigger_set_in_conference = Trigger.filter(conference_id=int(self.obj.peer_id)).execute()
         trigger_set_global = Trigger.filter(conference_id=None).execute()
+        # Приоритетными являются триггеры из конференции
         for trigger in trigger_set_in_conference:
             if (trigger.trigger_type == 0 and trigger.trigger_text == self.obj.text) or \
                     (trigger.trigger_type == 1 and self.obj.text.lower().find(trigger.trigger_text) != -1):
                 return trigger.trigger_id, trigger.trigger_chance, trigger.trigger_text
+        # Если ничего не нашли, лезем в глобальные
         for trigger in trigger_set_global:
             if (trigger.trigger_type == 0 and trigger.trigger_text == self.obj.text) or \
                     (trigger.trigger_type == 1 and self.obj.text.lower().find(trigger.trigger_text) != -1):
@@ -207,7 +219,12 @@ class DataBaseTrigger(BaseWorkWith):
         return None, None, None
 
     @staticmethod
-    def get_answer_from_db(id_trigger):
+    def get_answer_from_db(id_trigger: int) -> dict:
+        """
+
+        :param id_trigger: id триггера
+        :return: словарь с информацией о ответе на триггер
+        """
         trigger_obj = Trigger.get_by_id(id_trigger)
         answers_set = Answer.select().join(TriggerAnswer).where(TriggerAnswer.trigger_link == trigger_obj.trigger_id)
         answers_return_list = []
@@ -226,26 +243,44 @@ class DataBaseTrigger(BaseWorkWith):
 
 
 class PermissionsWorker(BaseWorkWith):
-    def __init__(self, obj, vk):
-        super().__init__(obj, vk)
+    """
+    Все что связанно с администрированием конференций и бота вообще
+    """
+
+    def __init__(self, obj, vk, dict_of_globals):
+        super().__init__(obj, vk, dict_of_globals)
         self.permission = PermissionChecker(obj, vk)
 
-    def _params_str_to_dict(self, params_str) -> dict:
+    def _params_str_to_dict(self, params_str: str) -> dict:
+        """
+        Превращает сообщение пользователя в набор параметров для бана
+        :param params_str:
+        :return: словарь с командой, пользователем и конференцией для бана
+        """
+        # Преобразуем строку в итерируемый вид
         string_to_work = params_str[:params_str.find(" ")]
         params_str = params_str[params_str.find(" ") + 1:]
+
+        # Параметры для передачи в возвращаемый слвоарь
         user_id = None
         conference_id = self.obj.peer_id
         command_to_ban = None
+
+        # Пользователь или команда pt.2
         if string_to_work in ["!бан", "!разбан"]:
+            # Костыль на проверку: если больше одного разделителя и отправитель сообщения админ, то бан глобальный
             if params_str.count("|") > 1:
                 if not self.permission.is_user_admin():
                     raise ValueError
                 conference_id = None
-
+            # Достаем id пользователя из формата тега в ВК
             user_id = params_str[1:params_str.find("|")]
             user_id = int(user_id[2:]) if user_id.find("id") + 1 else -int(user_id[6:])
+
+        # Пользователь или команда pt.3
         elif string_to_work in ["!бан_ком", "!разбан_ком"]:
             command_to_ban = params_str
+            # Костыль на проверку: если есть разделитель  и отправитель сообщения админ, то бан глобальный
             if params_str.count("|") > 0:
                 if not self.permission.is_user_admin():
                     raise ValueError
@@ -258,23 +293,34 @@ class PermissionsWorker(BaseWorkWith):
                 "command_to_ban": command_to_ban
             }
 
-    def ban(self):
+    def ban(self) -> str:
+        """
+        Функция для бана юзера
+        :return: сообщение о бане пользователя или ошибка
+        """
         msg_text = str(self.obj.text)
+        # Проверяем сообщение на соответствие формату и права доступа пользователя
         if (compare_ban(msg_text) or compare_ban_command(msg_text)) and (
                 self.permission.is_user_admin() or self.permission.is_user_admin_in_conference()):
+            # Либо достаем словарик с тем кого или что забанить либо оскорбляем пользователя
             try:
                 dict_of_parameters = self._params_str_to_dict(msg_text)
             except ValueError:
-                return "Ну и че ты натворил? Иди чини эту хуйню теперь"
-
+                return "Ну и че ты натворил? Иди чини вот это теперь"
+            # Баним то, что нам вернулось
             Permission.create(user_vk_id=dict_of_parameters["user_id"],
                               conference_id=dict_of_parameters["conference_id"],
                               command_name=dict_of_parameters["command_to_ban"])
             return "Бан!"
         else:
+            # Не одобряекм
             return "Nigger"
 
-    def unban(self):
+    def unban(self) -> str:
+        """
+        Разбаниваем юзера/команду
+        :return: сообщение об ошибке или сообщение об успешном разбане
+        """
         msg_text = str(self.obj.text)
         if (compare_unban(msg_text) or compare_unban_command(msg_text)) and (
                 self.permission.is_user_admin() or self.permission.is_user_admin_in_conference()):
