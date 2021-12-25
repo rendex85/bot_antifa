@@ -9,7 +9,7 @@ from consts import const_array
 from utils.WorkWithUtils.WorkWithAuth import AuthTools
 from utils.WorkWithUtils.WorkWithUpload import PhotoUpload
 from utils.WorkWithUtils.WorkWithUsers import UserAnalyze
-from utils.WorkWithUtils.cache_utils import cache_finder_photo, cache_append
+from utils.cache_utils import cache_finder_photo, cache_append
 from .MainWorkWith import BaseWorkWith
 
 
