@@ -16,7 +16,7 @@ class ChessStart(BaseHandler):
                 if not el.second_player_id and el.first_player_id != self.obj.from_id:
                     chess_object = el
                 else:
-                    self.message_data.message = "Ты че дурррак блять???"
+                    self.message_data.message = "Ты че дурррак???"
                     return
                 break
         if not chess_object:

@@ -1,4 +1,5 @@
 import inspect
+import os
 
 import random
 import threading
@@ -11,6 +12,8 @@ from utils.WorkWithUtils.WorkWithUsers import UserAnalyze
 from utils.cache_utils import cache_finder_photo, cache_append
 from .MainWorkWith import BaseWorkWith
 
+PUBLIC = os.getenv("PUBLIC")
+
 
 class GetPicture(BaseWorkWith):
     def pic(self) -> str:
@@ -21,9 +24,9 @@ class GetPicture(BaseWorkWith):
         split_data_message = self.obj.text.split(" ")
         if split_data_message[0] in ["!пик", "!пикча", "!gbr", "!gbrxf", ]:
             if len(split_data_message) == 1:
-                return self.get_img('-84187544', 'wall', )
+                return self.get_img('-PUBLIC', 'wall', )
             elif (int(split_data_message[1]) in range(1, 11)) and len(split_data_message) == 2:
-                return self.get_img('-84187544', 'wall', count_of_pics=int(split_data_message[1]))
+                return self.get_img('-PUBLIC', 'wall', count_of_pics=int(split_data_message[1]))
         else:
             raise KeyError
 
