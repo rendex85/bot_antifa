@@ -199,6 +199,7 @@ class DataBaseTrigger(BaseWorkWith):
             for trigger in trigger_set:
                 response_text += f"Триггер: {trigger.trigger_text} | set_chance={trigger.trigger_chance} " \
                                  f"strict={trigger.trigger_type}\n"
+            
             return response_text
         else:
             raise KeyError
