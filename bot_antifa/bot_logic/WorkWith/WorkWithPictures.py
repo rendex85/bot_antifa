@@ -1,4 +1,3 @@
-
 import inspect
 
 import random
@@ -34,7 +33,7 @@ class GetPicture(BaseWorkWith):
         :return:  vk photo id with prefix
         """
         choose_alb = random.choice(const_array.gatari_alb_lsit)
-        return self.get_img('-7776162', choose_alb, 'photo-7776162')
+        return self.get_img(owner='-7776162', album=choose_alb)
 
     def chush(self) -> str:
         """
@@ -58,7 +57,8 @@ class GetPicture(BaseWorkWith):
         команда !каспер
         :return: vk photo id with prefix
         """
-        casper_attach = self.get_img(owner="299186552", album="276063968", get_from="user")
+        casper_attach = self.get_img(owner="299186552", album="276063968", get_from="user",
+                                     caller_name=inspect.currentframe().f_code.co_name)
         return casper_attach
 
     def vasily_cat(self) -> str:
@@ -88,6 +88,7 @@ class GetPicture(BaseWorkWith):
         choose_alb = random.choice(const_array.photo_garik_list[random_num])
         photo_url = self.get_img(owner=const_array.account_garik_list[random_num], album=choose_alb, get_from="user")
         return photo_url
+
     """
     ты ушел брат ты ушел так рано
     
@@ -133,6 +134,7 @@ class GetPicture(BaseWorkWith):
             for _ in range(0, count_of_pics):
                 pic_object = random.choice(dict_of_img['items'])
                 pic_string += f"photo{owner}_" + str(pic_object["id"]) + ","
+            return pic_string
 
         elif get_from == "user":
             url_pic = dict_of_img['items'][0]['sizes'][-1]['url']
@@ -142,7 +144,6 @@ class GetPicture(BaseWorkWith):
                 if not pic_string:
                     pic_string = PhotoUpload.load_img(AuthTools.authByGroup()[2], url_pic)
                     cache_append(cache_dict=self.dict_of_globals, url=url_pic, type_name=caller_name, value=pic_string)
-
             else:
                 pic_string = PhotoUpload.load_img(AuthTools.authByGroup()[2], url_pic)
         return pic_string

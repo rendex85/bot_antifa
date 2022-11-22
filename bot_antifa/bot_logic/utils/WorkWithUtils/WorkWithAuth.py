@@ -17,6 +17,7 @@ class AuthTools:
         Логин и пароль указывается в login_const
         :return: vk user session object
         """
+        print(login_consts.phone, login_consts.password)
         vk_session1 = vk_api.VkApi(str(login_consts.phone), str(login_consts.password))
         try:
             vk_session1.auth(token_only=True)

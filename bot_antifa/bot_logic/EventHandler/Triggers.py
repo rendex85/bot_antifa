@@ -73,6 +73,13 @@ class PicHandler(BaseHandler):
             self.do_post = False
 
 
+class GatHandler(BaseHandler):
+    trigger_in = ["!гат", "!гатари", ]
+
+    def preHandler(self):
+        self.message_data.attachment = self.working_methods.gat()
+
+
 class ChushHandler(BaseHandler):
     do_threading = True
     trigger_strict = ["чуш", ]
@@ -115,12 +122,6 @@ class GachaHandler(BaseHandler):
         self.message_data.attachment = random.choice(const_array.gacha_list)
 
 
-class FashiHandler(BaseHandler):
-    trigger_in = ["фаши", ]
-    trigger_not_in = ["мы против фашизма", ]
-
-    def preHandler(self):
-        self.message_data.message = const_txt.fascist
 
 
 class SaberHandler(BaseHandler):
@@ -197,7 +198,8 @@ class VasilyCat(BaseHandler):
 
     def preHandler(self):
         self.message_data.attachment = self.working_methods.vasily_cat()
-        
+
+
 class test_cache(BaseHandler):
     do_threading = True
     trigger_strict = ["!cac"]

@@ -52,10 +52,9 @@ class MainLoop:
                                                       trigger_class, vk, event.obj, self.DICT_OF_GLOBAL_VARIABLES))
                     threads.append(new_thread)
                     new_thread.start()
-                    if len(threads) > 2000:
-                        [thread.join() for thread in threads]
-                        threads = []
-                    # new_thread.join()
+            if len(threads) > 2000:
+                [thread.join() for thread in threads]
+                threads = []
 
 
 # TODO: Сделай уже нормальное логирование, дэбил
